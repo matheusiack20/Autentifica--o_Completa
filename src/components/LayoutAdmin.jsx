@@ -1,23 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LayoutAdmin({ children }) {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status, error } = useSession();
+
+  useEffect(() => {
+    // Redireciona para a página de login se o usuário estiver não autenticado
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   if (status === "loading") {
-    return null;
+    return <div>Carregando...</div>;
   }
 
-  if (!session) {
-    setTimeout(() => {
-      router.push("/login");
-    }, 100);
-
-    return null;
+  if (error) {
+    console.error("Erro ao verificar a sessão:", error);
+    return <div>Erro ao carregar sessão. Por favor, tente novamente.</div>;
   }
 
-  return <div className="min-h-screen">{children}</div>;
+  if (status === "authenticated") {
+    return <div className="min-h-screen">{children}</div>;
+  }
+
+  return null;
 }

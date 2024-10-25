@@ -1,28 +1,33 @@
 "use client";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
+
 import Link from "next/link";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import imglogo from "../../public/LogoMAP.png";
+import logoFace from "../../public/Facebookapp.png";
+import logoGoogle from "../../public/googlelogo.png";
 
 export default function Login() {
   const router = useRouter();
   const [error, setError] = useState("");
-  const { status } = useSession();
   const [isFormSubmitting, setFormSubmitting] = useState(false);
+  const { status } = useSession();
 
-  // Redireciona se já estiver autenticado
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/");
     }
   }, [status, router]);
 
-  // Se o usuário já estiver autenticado, não renderiza o formulário
-  if (status !== "unauthenticated") {
+  if (status === "loading") {
+    return <div>Carregando...</div>;
+  }
+
+  if (status === "authenticated") {
     return null;
   }
 
@@ -40,56 +45,122 @@ export default function Login() {
 
   async function handleSubmit(values, { resetForm }) {
     setFormSubmitting(true);
-    setError(""); // Limpa o erro anterior
+    setError("");
 
     try {
       const result = await signIn("Credentials", { ...values, redirect: false });
 
       if (!result.error) {
-        router.push("/"); // Redireciona se não houver erro
+        router.push("/");
       } else {
-        setError(result.error.replace("Error: ", "")); // Define o erro
-        resetForm(); // Limpa o formulário
+        setError(result.error.replace("Error: ", ""));
+        resetForm();
         setTimeout(() => {
-          setError(""); // Limpa o erro após 3 segundos
+          setError("");
         }, 3000);
       }
     } catch {
-      setError("Erro ao criar conta, tente mais tarde!"); // Captura qualquer erro
+      setError("Erro ao fazer login, tente mais tarde!");
     } finally {
-      setFormSubmitting(false); // Sempre finaliza o processo de submissão
+      setFormSubmitting(false);
+    }
+  }
+
+  async function handleSocialLogin(provider) {
+    const result = await signIn(provider, { redirect: false });
+
+    if (result.error) {
+      setError(result.error.replace("Error: ", ""));
+    } else {
+      router.push("/");
     }
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
+    <main className="min-h-screen flex items-center justify-center bg-[black]">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => (
+        {({ isSubmitting }) => (
           <Form
             noValidate
-            className="flex flex-col gap-2 p-4 border rounded border-zinc-300 min-w-[300px] bg-white"
+            className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] min-w-[450px] shadow-md rounded-3xl"
           >
-            <Input name="email" type="email" required />
-            <Input name="password" type="password" required autoComplete="off" />
-            <Button
-              type="submit"
-              text={isFormSubmitting ? "Carregando..." : "Entrar"}
-              disabled={isFormSubmitting}
-              className="bg-green-500 text-white rounded p-2 cursor-pointer"
-            />
-            {error && ( // Exibe o erro se existir
-              <span className="text-red-500 text-sm text-center">{error}</span>
-            )}
-            <span className="text-xs text-zinc-500">
-              Não possui uma conta?
-              <strong className="text-zinc-700">
-                <Link href="/register"> Inscreva-se</Link>
-              </strong>
+            <Image className="min-w-[150px] w-px" src={imglogo} alt="Logo" />
+
+            <h2 className="text-[#d4ef00] text-center">Faça o seu Login para continuar:</h2>
+
+            <div className="flex justify-center gap-4 mb-4">
+              <button
+                type="button"
+                onClick={() => handleSocialLogin("facebook")}
+                className="flex bg-[black] p-2 text-white w-1/2 rounded-full items-center hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
+              >
+                <Image className="min-w-[20px]" src={logoFace} alt="Facebook" />
+                Facebook
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSocialLogin("google")}
+                className="flex bg-[black] p-2 text-white w-1/2 rounded-full items-center hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
+              >
+                <Image className="min-w-[20px] mr-2" src={logoGoogle} alt="Google" />
+                Google
+              </button>
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="email" className="text-[#d4ef00]">E-mail:</label>
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                className="bg-[#3a3a3a] text-white p-2 rounded-md border border-[#d4ef00]"
+                required
+              />
+              <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="password" className="text-[#d4ef00]">Senha:</label>
+              <Field
+                id="password"
+                name="password"
+                type="password"
+                className="bg-[#3a3a3a] text-white p-2 rounded-md border border-[#d4ef00]"
+                required
+              />
+              <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+            </div>
+
+            <span className="text-[#B3B3B3] text-sm text-right mt-2">
+              <Link href="/forgot-password">Esqueceu a senha?</Link>
             </span>
+
+            <center>
+              <button
+                type="submit"
+                className={`p-2 bg-gradient-to-r from-[#1d1d1f] via-[#DAFD00] to-[#1d1d1f] text-[#2a2a2a] rounded-md text-center w-[200px] ${isSubmitting
+                  ? "cursor-not-allowed opacity-50"
+                  : "cursor-pointer"
+                }`}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Carregando..." : "Entrar"}
+              </button>
+            </center>
+
+            <span className="text-sm text-center mt-2 text-[#B3B3B3]">
+              Novo por aqui?{" "}
+              <span className="text-[#DAFD00] no-underline">
+                <Link href="/register">Assine agora.</Link>
+              </span>
+            </span>
+
+            {error && <div className="text-red-500 text-sm text-center mt-2">{error}</div>}
           </Form>
         )}
       </Formik>

@@ -1,15 +1,47 @@
+/* Importações do Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Variáveis de tema claro */
+:root {
+  --background: #000000;
+  --foreground: #ededed;
 }
 
-body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+/* Variáveis para tema escuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ededed;
+  }
 }
+
+
+
+
+/* Estilização global do body */
+body {
+  @apply text-base leading-relaxed; /* Adiciona utilidades Tailwind */
+  color: black;
+  background-color: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Camada de utilidades customizadas do Tailwind */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance; /* Alinha textos com boa distribuição */
+  }
+}
+
+
+@font-face {
+  font-family: "nasalization";
+  src: url("../app/public/nasalization-rg.otf");
+}
+
+.nasalization {
+  font-family: "nasalization";
+}
+

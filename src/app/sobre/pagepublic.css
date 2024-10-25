@@ -1,0 +1,111 @@
+
+
+/* Centralizar o container principal */
+.containerpublic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    margin-top: 120px;
+    margin-bottom: 120px;
+    width: 100%;
+    max-width: 1200px; /* Limite da largura máxima para centralizar */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Ajuste das imagens para ocupar a largura de forma proporcional */
+.dpage {
+    display: flex;
+    justify-content: space-around; /* Espaço igual ao redor das imagens */
+    align-items: center;
+    width: 100%;
+    gap: 20px; /* Espaçamento entre as imagens */
+}
+
+.dpage img {
+    max-width: 20%; /* Cada imagem ocupa 30% do container */
+    height: auto; /* Manter a proporção das imagens */
+}
+
+#fotopaginit{
+    max-width: 50%;
+    height: auto;
+    border-radius: 200px;
+    border: 5px solid white;
+}
+
+/* Ajuste do texto */
+#titlecon {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #DAFD00;
+}
+
+#subtitle {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #DAFD00;
+}
+
+#textop {
+    font-size: 1.2rem;
+    text-align: justify;
+    max-width: 900px; /* Limita a largura do texto */
+    margin-top: 20px;
+    color: white;
+}
+
+@keyframes gradientButton {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 50% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#saibamaispersona {
+    background: linear-gradient(90deg, #1d1d1f, #DAFD00,#1d1d1f, #DAFD00); /* cores para o degradê */
+    background-size: 400% 400%;
+    color: black;
+    font-weight: bold;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+    cursor: pointer;
+    transition: background 0.0s ease;
+    animation: gradientButton 2s ease infinite;
+}
+
+/* Botão com mais destaque */
+button {
+    background-color: #DAFD00;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+
+
+/* Ajuste para o footer não sobrepor o conteúdo */
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+}

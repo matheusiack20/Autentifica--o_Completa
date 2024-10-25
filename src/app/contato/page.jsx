@@ -1,4 +1,4 @@
-import LayoutAdmin from "@/components/LayoutAdmin";
+import LayoutAdmin from "../../components/LayoutAdmin";
 import React from "react";
 
 export default function Contato() {

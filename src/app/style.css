@@ -1,0 +1,147 @@
+/* Ajustar o container geral para a tela toda */
+.containerhome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh; /* Ocupa a altura total da viewport */
+    padding-top: 80px; /* Espaçamento para evitar sobreposição do header */
+    padding-bottom: 0px;
+    background-color: white;
+    position: relative;
+}
+
+/* Estilo para a imagem da inteligência artificial à esquerda */
+.containerhome img {
+    max-width: 38vw;
+    height: auto;
+    object-fit: contain;
+    z-index: 0;
+}
+
+/* Box com conteúdo centralizado */
+.boxinit {
+    max-width: 50%; /* Aumenta o espaço para o texto e o botão */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+h2 {
+    font-size: 42px; /* Aumenta o tamanho do texto */
+    /* margin-top: 0px; */
+    color: black;
+    line-height: 1.4;
+}
+
+
+
+
+@keyframes gradientButton {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 50% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#buttoninit {
+    background: linear-gradient(90deg, #fff, #DAFD00,#fff, #DAFD00); /* cores para o degradê */
+    background-size: 400% 400%;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+    margin-top: 50px;
+    cursor: pointer;
+    transition: background 0.0s ease;
+    animation: gradientButton 2s ease infinite;
+}
+
+/* Ajustar responsividade */
+@media (max-width: 768px) {
+    .containerhome {
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 60px;
+    }
+
+    .containerhome img {
+        max-width: 40%;
+        margin-bottom: 20px;
+    }
+
+    .boxinit {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    #buttoninit {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+
+/* Botao de Alternancia */
+
+.toggle-button {
+    display: inline-flex;
+    border: 1px solid #000; /* Borda preta */
+    border-radius: 25px; /* Bordas arredondadas */
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #fff; /* Fundo branco */
+}
+
+.toggle-button input[type="radio"] {
+    display: none;
+}
+
+.toggle-button label {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: #000; /* Cor do texto */
+    background-color: #fff; /* Fundo padrão branco */
+    border-radius: 25px; /* Bordas arredondadas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold; /* Texto mais forte */
+}
+
+.toggle-button label:first-of-type {
+    border-right: 1px solid #ccc; /* Linha divisória entre as opções */
+}
+
+.toggle-button input[type="radio"]:checked + label {
+    background-color: #DAFD00; /* Cor de destaque (amarelo neon) */
+    color: #000; /* Cor do texto quando selecionado */
+}
+
+.toggle-button label span {
+    font-size: 12px;
+    color: #555;
+    display: block;
+    margin-top: 4px;
+}
+
+.toggle-button input[type="radio"]:checked + label span {
+    color: #000; /* Cor do texto menor quando selecionado */
+}

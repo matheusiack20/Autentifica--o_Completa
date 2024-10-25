@@ -12,7 +12,20 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      backgroundSize: {
+        '400%': '400% 400%', // Extend background size to 400%
+      },
+      keyframes: {
+        gradientButton: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '50% 100%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+      },
+      animation: {
+        gradientButton: 'gradientButton 2s ease infinite', // Define custom animation
+      },
     },
   },
   plugins: [],
-}
+};
