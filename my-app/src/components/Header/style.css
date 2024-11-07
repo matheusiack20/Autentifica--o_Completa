@@ -1,0 +1,125 @@
+* {
+    font-family: "nasalization";
+}
+
+/* Estilo para o logo no header */
+#logoMap { 
+    width: 250px;
+    height: 100px;
+    margin-left: 30px;
+    object-fit: contain;
+}
+
+/* Header fixo no topo */
+.dheader { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    z-index: 999;
+    padding: 0 20px;
+}
+
+/* Estilo do nav dentro do header */
+.dnav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Lista de itens de navegação */
+#dul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    gap: 80px;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+}
+
+/* Itens individuais da lista */
+.dli {
+    position: relative; /* Necessário para o menu suspenso */
+    margin-right: 40px;
+}
+
+/* Estilo ao passar o mouse nos itens */
+.dli:hover {
+    color: #dafd00;
+    font-weight: bold;
+}
+
+/* Botão de login */
+.dloginx {
+    margin-right: 40px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #DAFD00;
+    width: 170px;
+    height: 30px;
+    color: black;
+    font-size: 1.1rem;
+    margin-top: 0px;
+}
+
+/* Estilos para o menu suspenso */
+.dli .absolute {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    min-width: 150px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0;
+}
+
+/* Estilos para links e botões dentro do menu suspenso */
+.dli .absolute a,
+.dli .absolute button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    color: #4a4a4a;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    transition: background-color 0.2s;
+}
+
+.dli .absolute a:hover,
+.dli .absolute button:hover {
+    background-color: #f3f3f3;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    #logoMap {
+        width: 150px;
+        height: 60px;
+    }
+
+    #dul {
+        gap: 40px;
+        font-size: 13px;
+    }
+
+    .dheader {
+        height: 80px;
+    }
+
+    .dloginx {
+        width: 130px;
+        height: 25px;
+        font-size: 1rem;
+    }
+}

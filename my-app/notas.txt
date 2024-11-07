@@ -1,0 +1,3 @@
+// Codigo para rodar no npm para rodar o site:
+
+$env:NODE_OPTIONS="--inspect"; .\node_modules\.bin\next dev
