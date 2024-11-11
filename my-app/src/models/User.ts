@@ -1,11 +1,19 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 import argon2 from "argon2";
 
-// Interface para tipagem do modelo User
+// Interface para tipagem do documento User
 interface IUser extends Document {
   email: string;
   password: string;
+  name: string;
+  role: string;
+  image: string;
   comparePassword: (password: string) => Promise<boolean>;
+}
+
+// Interface para o modelo User, que inclui o método estático
+interface IUserModel extends Model<IUser> {
+  findUserWithPassword: (email: string, password: string) => Promise<IUser | null>;
 }
 
 // Definição do Schema do User
@@ -22,23 +30,6 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-// Middleware para hash de senha antes de salvar
-userSchema.pre("save", async function (next) {
-  const user = this as IUser;
-
-  // Se a senha foi modificada ou é um novo usuário
-  if (!user.isModified("password")) return next();
-
-  try {
-    // Cria o hash da senha com salting
-    const hashedPassword = await argon2.hash(user.password);
-    user.password = hashedPassword;
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 // Método para comparar a senha fornecida com a armazenada
 userSchema.methods.comparePassword = async function (
   password: string
@@ -47,7 +38,7 @@ userSchema.methods.comparePassword = async function (
   return argon2.verify(user.password, password);
 };
 
-// Função para encontrar o usuário e verificar a senha
+// Função estática para encontrar o usuário e verificar a senha
 userSchema.statics.findUserWithPassword = async function (
   email: string,
   password: string
@@ -63,6 +54,6 @@ userSchema.statics.findUserWithPassword = async function (
 };
 
 // Verifica se o modelo já está registrado para evitar sobrescrever
-const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+const User = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>("User", userSchema);
 
 export default User;
