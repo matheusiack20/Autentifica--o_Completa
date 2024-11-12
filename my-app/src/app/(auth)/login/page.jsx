@@ -143,7 +143,7 @@ export default function Login() {
             </div>
 
             <span className="text-[#B3B3B3] text-sm text-right mt-2">
-              <Link href="/pages/api/auth/forgot-password">Esqueceu a senha?</Link>
+              <Link href="/api/auth/forgot-password">Esqueceu a senha?</Link>
             </span>
 
             <center>

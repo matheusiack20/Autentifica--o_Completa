@@ -54,7 +54,7 @@ export default function Header({ scrollToPlans }) {
 
         <ul id="dul">
           <li className="dli"><Link href="/">Home</Link></li>
-          <li className="dli" onClick={scrollToPlans} style={{ cursor: 'pointer' }}>Nossos Planos</li>
+          <li className="dli"><Link href= "/sobre">Nossos Planos</Link></li>
           <li className="dli"><Link href="/contato">Contato</Link></li>
 
           {session && (

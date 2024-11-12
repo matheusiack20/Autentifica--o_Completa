@@ -10,6 +10,7 @@
   "dependencies": {
     "argon2": "^0.41.1",
     "autoprefixer": "10.4.14",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
@@ -22,6 +23,7 @@
     "next": "^15.0.2",
     "next-auth": "^4.24.10",
     "node": "^22.11.0",
+    "node-mailjet": "^6.0.6",
     "nodemailer": "^6.9.16",
     "nodemailer-express-handlebars": "^7.0.0",
     "postcss": "^8.4.47",

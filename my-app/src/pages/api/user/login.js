@@ -1,6 +1,6 @@
 
-import dbConnect from "../../../../utils/db"; // Certifique-se de conectar ao banco
-import { findUserWithPassword } from '../../../../models/User';
+import dbConnect from "../../../utils/db"; // Certifique-se de conectar ao banco
+import { findUserWithPassword } from '../../../models/User';
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {

@@ -24,12 +24,13 @@ export default function ForgotPassword() {
         setIsLoading(false);
         return;
       }
-
+      
       const response = await axios.post(
-        "/api/auth/forgot-password",
+        "/api/user/forgot-pass", // Caminho da API ajustado
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
+      
       console.log("Resposta completa da API:", response);
 
       if (response.data.success) {

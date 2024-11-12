@@ -22,15 +22,17 @@
         "name": "next"
       }
     ],
-    "target": "ES2017"
+    "target": "ES2017",
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/api/auth/[...nextauth]/route.js"
-, "src/components/Header/Header.jsx"  ],
+    "src/app/api/auth/[...nextauth]/route.js",
+    "src/components/Header/Header.jsx"
+  ],
   "exclude": [
     "node_modules"
   ]
