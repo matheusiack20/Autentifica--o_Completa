@@ -1,3 +1,5 @@
+// src\app\(auth)\login\page.jsx
+
 "use client";
 
 import Link from "next/link";
@@ -77,7 +79,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Erro ao tentar login social com", provider, ":", error);
-      setError(`Erro ao fazer login com ${provider}`);
+      // setError(`Erro ao fazer login com ${provider}`);
     }
   }
 

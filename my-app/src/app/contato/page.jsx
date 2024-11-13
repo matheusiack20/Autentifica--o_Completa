@@ -1,6 +1,5 @@
 "use client";
 
-import LayoutAdmin from "../../components/LayoutAdmin";
 import { useState } from "react";
 import React from "react";
 import Image from "next/image";
@@ -64,7 +63,7 @@ export default function Contato() {
   }
 
   return (
-    <LayoutAdmin>
+    <main>
       <main className="flex flex-col items-center justify-center min-h-screen">
         <div className="flex items-center mb-4">
           <h1 className="text-[40px] text-[#DAFD00] font-bold mr-4">Fale Conosco</h1>
@@ -129,6 +128,6 @@ export default function Contato() {
           )}
         </form>
       </main>
-    </LayoutAdmin>
+    </main>
   );
 }

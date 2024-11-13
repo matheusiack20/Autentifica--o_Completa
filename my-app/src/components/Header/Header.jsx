@@ -2,12 +2,14 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation"; // Import usePathname
 import "./style.css";
 import Image from "next/image";
 import imglogo from "/public/LogoMAP.png"; // Path to logo image
 
 export default function Header({ scrollToPlans }) {
   const { status, data: session } = useSession();
+  const pathname = usePathname(); // Get the current path
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -28,16 +30,10 @@ export default function Header({ scrollToPlans }) {
     return <div>Loading...</div>; 
   }
 
-  // Don't render if not authenticated
-  if (status === "unauthenticated") {
-    return null;
-  }
-
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const handleSignOut = async () => {
     try {
-      console.log("Tentando sair..."); // For debugging
       await signOut({ redirect: true, callbackUrl: "/login" });
       setMenuOpen(false);
     } catch (error) {
@@ -49,15 +45,16 @@ export default function Header({ scrollToPlans }) {
     <header className="dheader">
       <nav className="dnav">
         <Link href="/" passHref>
-          <Image id="logoMap" src={imglogo} alt="Logo Map" />
+          <Image id="logoMap" w-px src={imglogo} alt="Logo Map" />
         </Link>
 
         <ul id="dul">
           <li className="dli"><Link href="/">Home</Link></li>
-          <li className="dli"><Link href= "/sobre">Nossos Planos</Link></li>
+          <li className="dli"><Link href="/sobre">Nossos Planos</Link></li>
           <li className="dli"><Link href="/contato">Contato</Link></li>
 
-          {session && (
+          {session ? (
+            // Menu for logged-in users
             <li className="dli relative" ref={menuRef}>
               <div onClick={toggleMenu} className="cursor-pointer flex items-center" aria-expanded={menuOpen}>
                 <Image
@@ -80,6 +77,17 @@ export default function Header({ scrollToPlans }) {
                 </div>
               )}
             </li>
+          ) : (
+            // Login button for users who are not logged in, hidden on login and register pages
+            (pathname !== "/login" && pathname !== "/register") && (
+              <li className="dli">
+                <Link href="/login">
+                  <button className="bg-[#DAFD00] text-gray-800 hover:bg-gray-200 rounded-md px-5 py-2 transition ease-in-out duration-150">
+                    Login
+                  </button>
+                </Link>
+              </li>
+            )
           )}
         </ul>
       </nav>

@@ -3,7 +3,6 @@
 import { useState, useRef } from "react";
 import "./globals.css";
 import "./style.css";
-import LayoutAdmin from "../components/LayoutAdmin";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "../components/Header/Header"; // Certifique-se de que este componente está sendo utilizado, caso contrário, pode ser removido.
@@ -29,7 +28,7 @@ export default function Home() {
   };
 
   return (
-    <LayoutAdmin>
+    <main>
       <div className="containerhome">
         <Image
           src={imageminteligenciaesq}
@@ -131,7 +130,7 @@ export default function Home() {
           </div>
         </center>
       </main>
-    </LayoutAdmin>
+    </main>
   );
 }
 

@@ -91,7 +91,7 @@ export default function Register() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-black">
+    <main className="min-h-screen flex items-center justify-center bg-black pt-40 pb-20">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -99,14 +99,14 @@ export default function Register() {
       >
         {({ isSubmitting }) => (
           <Form
-            noValidate
-            className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] min-w-[450px] shadow-md rounded-3xl"
-          >
+          noValidate
+          className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] min-w-[450px] shadow-md rounded-3xl"
+        >
             <Image
-              className="min-w-[150px] w-px"
-              src={imglogo}
-              alt="Logo MAP"
-            />
+          className="min-w-[150px] w-px"
+          src={imglogo}
+          alt="Logo MAP"
+        />
 
             <h2 className="text-[#d4ef00] text-center">Bem Vindo!</h2>
             <h3 className="text-[#d4ef00] text-center">Faça seu cadastro!</h3>

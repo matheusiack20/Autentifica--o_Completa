@@ -8,6 +8,8 @@ interface IUser extends Document {
   name: string;
   role: string;
   image: string;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   comparePassword: (password: string) => Promise<boolean>;
 }
 
@@ -24,6 +26,8 @@ const userSchema = new Schema<IUser>(
     name: { type: String, required: true },
     role: { type: String, default: "user" },
     image: { type: String, default: "/Generic_avatar.png" },
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null },
   },
   {
     timestamps: true, // Cria os campos createdAt e updatedAt automaticamente

@@ -1,14 +1,18 @@
+// src/app/api/auth/forgot-password/page.jsx
+
 "use client";
 
 import React, { useState } from "react";
 import axios from "axios";
 
 export default function ForgotPassword() {
+  // Declaração de estados para gerenciar o formulário e mensagens de feedback
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Função de envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -18,21 +22,24 @@ export default function ForgotPassword() {
     try {
       console.log("Enviando solicitação de recuperação de senha para o e-mail:", email);
 
+      // Validação simples para garantir que o e-mail foi fornecido
       if (!email) {
         console.log("Erro: Nenhum e-mail foi fornecido no formulário.");
         setError("Por favor, insira um e-mail válido.");
         setIsLoading(false);
         return;
       }
-      
+
+      // Requisição para a API de recuperação de senha
       const response = await axios.post(
-        "/api/user/forgot-pass", // Caminho da API ajustado
+        "/api/user/forgot-pass",
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
-      
+
       console.log("Resposta completa da API:", response);
 
+      // Verificação do sucesso na resposta da API
       if (response.data.success) {
         console.log("Resposta da API: Sucesso - E-mail de recuperação enviado.");
         setMessage("Verifique seu e-mail para as instruções de redefinição de senha.");
@@ -43,6 +50,7 @@ export default function ForgotPassword() {
     } catch (err) {
       console.error("Erro ao enviar o e-mail de recuperação:", err);
 
+      // Exibe uma mensagem de erro detalhada caso a API retorne um erro específico
       if (err.response && err.response.data && err.response.data.message) {
         console.log("Erro da API:", err.response.data.message);
         setError(`Erro: ${err.response.data.message}`);
@@ -65,7 +73,7 @@ export default function ForgotPassword() {
         <p className="text-[#B3B3B3] mb-6">
           Insira seu e-mail para receber instruções de redefinição de senha.
         </p>
-        
+
         <input
           type="email"
           value={email}
@@ -85,6 +93,7 @@ export default function ForgotPassword() {
           {isLoading ? "Enviando..." : "Enviar Instruções"}
         </button>
 
+        {/* Exibe mensagens de sucesso ou erro, se existirem */}
         {message && <div className="text-green-500 mt-4">{message}</div>}
         {error && <div className="text-red-500 mt-4">{error}</div>}
       </form>
