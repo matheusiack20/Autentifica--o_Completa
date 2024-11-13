@@ -37,7 +37,7 @@ export default function Register() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/");
+      router.push("/login");
     }
   }, [status, router]);
 
@@ -78,7 +78,7 @@ export default function Register() {
       const result = await response.json();
 
       if (response.status === 201) {
-        router.push("/");
+        router.push("/login");
       } else {
         setError(result.message || "Erro ao criar conta, tente mais tarde!");
       }

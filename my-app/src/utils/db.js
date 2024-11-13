@@ -18,6 +18,8 @@ export const connectOnce = async () => {
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      bufferCommands: false, // Desabilita o buffering de comandos para evitar timeouts
+      serverSelectionTimeoutMS: 10000, // Timeout de 10 segundos para seleção do servidor
     });
     isConnected = true;
     console.log("MongoDB conectado com sucesso!");
@@ -27,6 +29,7 @@ export const connectOnce = async () => {
     setTimeout(connectOnce, 5000);
   }
 
+  // Eventos de conexão
   mongoose.connection.on("connected", () => {
     isConnected = true;
     console.log("Conexão ao MongoDB estabelecida.");
@@ -35,10 +38,14 @@ export const connectOnce = async () => {
   mongoose.connection.on("disconnected", () => {
     isConnected = false;
     console.log("Conexão com MongoDB perdida.");
+    // Retentar a conexão quando for desconectado
+    setTimeout(connectOnce, 5000);
   });
 
   mongoose.connection.on("error", (error) => {
     isConnected = false;
     console.error("Erro de conexão com MongoDB:", error);
+    // Retentar a conexão em caso de erro
+    setTimeout(connectOnce, 5000);
   });
 };

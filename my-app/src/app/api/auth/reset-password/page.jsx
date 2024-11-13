@@ -1,5 +1,3 @@
-// src/app/api/auth/reset-password/page.jsx
-
 "use client";
 
 import React, { useState } from "react";
@@ -43,7 +41,7 @@ export default function ResetPassword() {
       if (response.data.success) {
         setMessage("Senha redefinida com sucesso. Redirecionando para login...");
         setTimeout(() => {
-          if (router) router.push("/login");
+          router?.push("/login");
         }, 3000);
       } else {
         setError(response.data.message || "Erro ao redefinir a senha.");
