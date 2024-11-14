@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import "./globals.css";
 import "./style.css";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../components/Header/Header"; // Certifique-se de que este componente está sendo utilizado, caso contrário, pode ser removido.
+import Header from "../components/Header/Header";
 import "./sobre/pagepublic.css";
 import "./ToggleSwitch.css";
 
@@ -17,7 +18,18 @@ import im3 from "../../public/Foto2.png";
 
 export default function Home() {
   const [planType, setPlanType] = useState("anual");
+  const [isClient, setIsClient] = useState(false);
   const planSectionRef = useRef(null);
+  const router = useRouter();
+
+  // Verifica se o código está sendo executado no cliente
+  useEffect(() => {
+    setIsClient(typeof window !== "undefined");
+  }, []);
+
+  const isUserLoggedIn = () => {
+    return isClient && localStorage.getItem("userLoggedIn") === "true";
+  };
 
   const handlePlanTypeChange = (selectedPlanType) => {
     setPlanType(selectedPlanType);
@@ -25,6 +37,16 @@ export default function Home() {
 
   const scrollToPlans = () => {
     planSectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSubscriptionClick = () => {
+    if (isClient) {
+      if (isUserLoggedIn()) {
+        router.push("/");
+      } else {
+        router.push("/login");
+      }
+    }
   };
 
   return (
@@ -100,6 +122,7 @@ export default function Home() {
                   discountedPrice="R$ 190" 
                   duration="por 1 ano" 
                   discount="Economize até R$ 30 com a oferta"
+                  onSubscribeClick={handleSubscriptionClick}
                 />
                 <PlanCard 
                   title="Plano Mensal Bling" 
@@ -107,6 +130,7 @@ export default function Home() {
                   discountedPrice="R$ 190" 
                   duration="por 1 ano" 
                   discount="Economize até R$ 30 com a oferta"
+                  onSubscribeClick={handleSubscriptionClick}
                 />
               </>
             ) : (
@@ -117,6 +141,7 @@ export default function Home() {
                   discountedPrice="R$ 1.900" 
                   duration="por 1 ano" 
                   discount="Economize até R$ 500 com a oferta"
+                  onSubscribeClick={handleSubscriptionClick}
                 />
                 <PlanCard 
                   title="Plano Anual Bling" 
@@ -124,6 +149,7 @@ export default function Home() {
                   discountedPrice="R$ 1.900" 
                   duration="por 1 ano" 
                   discount="Economize até R$ 500 com a oferta"
+                  onSubscribeClick={handleSubscriptionClick}
                 />
               </>
             )}
@@ -134,7 +160,7 @@ export default function Home() {
   );
 }
 
-function PlanCard({ title, originalPrice, discountedPrice, duration, discount }) {
+function PlanCard({ title, originalPrice, discountedPrice, duration, discount, onSubscribeClick }) {
   return (
     <div className="plan-card">
       <h3 className="plan-title">{title}</h3>
@@ -144,7 +170,7 @@ function PlanCard({ title, originalPrice, discountedPrice, duration, discount })
       </div>
       <p className="plan-duration">{duration}</p>
       <p className="plan-discount">{discount}</p>
-      <button className="subscribe-btn">Assinar Agora</button>
+      <button className="subscribe-btn" onClick={onSubscribeClick}>Assinar Agora</button>
       <div className="features">
         <p>✔ Acesso ilimitado</p>
         <p>✔ Suporte 24 hrs</p>

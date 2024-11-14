@@ -1,7 +1,5 @@
-// src/pages/api/user/reset-pass.js
-
 import User from "../../../models/User";
-import bcrypt from "bcryptjs";
+import argon2 from "argon2";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -24,8 +22,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: "Token inválido ou expirado." });
       }
 
-      // Hash da nova senha para garantir segurança
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      // Hash da nova senha usando argon2 para garantir segurança
+      const hashedPassword = await argon2.hash(newPassword);
       user.password = hashedPassword;
 
       // Remove o token e a data de expiração, pois já não são mais necessários
