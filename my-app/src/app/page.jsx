@@ -22,7 +22,6 @@ export default function Home() {
   const planSectionRef = useRef(null);
   const router = useRouter();
 
-  // Verifica se o código está sendo executado no cliente
   useEffect(() => {
     setIsClient(typeof window !== "undefined");
   }, []);
@@ -39,10 +38,15 @@ export default function Home() {
     planSectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSubscriptionClick = () => {
+  const handleSubscriptionClick = async () => {
     if (isClient) {
       if (isUserLoggedIn()) {
-        router.push("/");
+        const paymentUrl = await generateMercadoPagoLink(planType);
+        if (paymentUrl) {
+          router.push(paymentUrl);
+        } else {
+          alert("Erro ao gerar link de pagamento. Tente novamente.");
+        }
       } else {
         router.push("/login");
       }

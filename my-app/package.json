@@ -18,6 +18,7 @@
     "eslint-config-next": "13.4.4",
     "formik": "^2.4.6",
     "mailslurp-client": "^15.20.2",
+    "mercadopago": "^2.0.15",
     "mongodb": "^6.10.0",
     "mongoose": "^7.8.2",
     "next": "^15.0.2",
