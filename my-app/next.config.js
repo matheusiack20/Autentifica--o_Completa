@@ -1,21 +1,23 @@
-// next.config.cjs
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        pathname: '**', // This allows any pathname from the domain
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'platform-lookaside.fbsbx.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "platform-lookaside.fbsbx.com",
+        pathname: "**",
       },
     ],
+  },
+  env: {
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
 };
 

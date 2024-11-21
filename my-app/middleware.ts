@@ -1,40 +1,53 @@
 import { withAuth } from "next-auth/middleware";
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export default withAuth({
-  // Middleware para adicionar a role ao token JWT
+  /**
+   * Middleware para adicionar a role ao token JWT
+   */
   async jwt({ token, user }) {
-    // Apenas adicione a role ao token se ainda não estiver presente
-    if (user && user.role) {
-      token.role = user.role;
+    if (user) {
+      token.role = user.role || "user"; // Define 'user' como padrão para role
     }
     return token;
   },
-  // Middleware para verificar o token e autorizar acesso com base na role
+  /**
+   * Middleware para autorizar acesso com base na role
+   */
   async handle({ req, token }) {
     const { pathname } = req.nextUrl;
 
-    // Checar se a rota começa com '/admin' e o token de role não é 'admin'
-    if (pathname.startsWith('/admin') && token?.role !== 'admin') {
-      // Impedir acesso a rotas de admin para usuários não-admin
-      return NextResponse.redirect(new URL('/login', req.url));
+    // Bloqueio para usuários não autenticados
+    if (!token) {
+      console.warn("Acesso negado: Usuário não autenticado");
+      return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // Permitir acesso se as condições forem atendidas
+    // Bloqueio para rotas de admin
+    if (pathname.startsWith("/admin") && token.role !== "admin") {
+      console.warn("Acesso negado: Role insuficiente para acessar rotas de admin");
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+
+    // Permitir acesso
     return NextResponse.next();
   },
-  // Configuração para proteger rotas específicas que exigem autenticação
+  /**
+   * Página de login
+   */
   pages: {
-    signIn: "/login", // Página de login
+    signIn: "/login",
   },
 });
 
-// Configuração de matcher para as rotas
+/**
+ * Rotas protegidas pelo middleware
+ */
 export const config = {
   matcher: [
-    "/dashboard/:path*",
-    "/profile/:path*",
-    "/settings/:path*",
-    "/admin/:path*",
+    "/dashboard/:path*", // Protege todas as rotas dentro de /dashboard
+    "/profile/:path*",   // Protege todas as rotas dentro de /profile
+    "/settings/:path*",  // Protege todas as rotas dentro de /settings
+    "/admin/:path*",     // Protege todas as rotas dentro de /admin
   ],
 };

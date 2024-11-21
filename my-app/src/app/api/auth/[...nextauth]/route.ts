@@ -2,14 +2,15 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import { connectOnce } from "../../../../utils/db"; // Função de conexão ao banco
+import { connectOnce } from "../../../../utils/db"; // Função para conectar ao banco de dados
 import User from "../../../../models/User"; // Modelo User
 import argon2 from "argon2";
 
-const genericAvatar = "/Generic_avatar.png";
+const genericAvatar = "/Generic_avatar.png"; // Avatar padrão
 
 const authOptions: NextAuthOptions = {
   providers: [
+    // **Credenciais**
     CredentialsProvider({
       id: "credentials",
       name: "Credenciais",
@@ -21,17 +22,20 @@ const authOptions: NextAuthOptions = {
         try {
           console.log("Credenciais recebidas:", credentials);
 
-          // Conectar ao banco de dados
+          // Conexão com o banco de dados
           await connectOnce();
 
-          // Verificar se o usuário existe e comparar a senha
-          const user = await User.findUserWithPassword(credentials.email, credentials.password);
+          // Busca o usuário e verifica a senha
+          const user = await User.findUserWithPassword(
+            credentials.email,
+            credentials.password
+          );
           if (!user) {
-            console.log("Usuário não encontrado ou senha incorreta.");
+            console.error("Usuário não encontrado ou senha incorreta.");
             throw new Error("Credenciais inválidas. Por favor, tente novamente.");
           }
 
-          // Retornar as informações do usuário após a autenticação bem-sucedida
+          // Retorna as informações do usuário autenticado
           return {
             id: user._id.toString(),
             name: user.name,
@@ -46,6 +50,7 @@ const authOptions: NextAuthOptions = {
       },
     }),
 
+    // **Google**
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
@@ -54,9 +59,10 @@ const authOptions: NextAuthOptions = {
           console.log("Perfil do Google recebido:", profile);
           await connectOnce();
 
+          // Procura o usuário no banco de dados
           let user = await User.findOne({ email: profile.email });
           if (!user) {
-            console.log("Criando novo usuário para o perfil do Google...");
+            console.log("Criando novo usuário do Google...");
             user = new User({
               name: profile.name,
               email: profile.email,
@@ -64,7 +70,6 @@ const authOptions: NextAuthOptions = {
               image: profile.picture || genericAvatar,
             });
             await user.save({ validateBeforeSave: false });
-            console.log("Usuário do Google salvo:", user);
           }
 
           return {
@@ -76,11 +81,12 @@ const authOptions: NextAuthOptions = {
           };
         } catch (error) {
           console.error("Erro ao processar perfil do Google:", error.message);
-          throw new Error("Erro ao processar perfil do Google. Por favor, tente novamente.");
+          throw new Error("Erro ao processar perfil do Google.");
         }
       },
     }),
 
+    // **Facebook**
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID || "",
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
@@ -89,9 +95,10 @@ const authOptions: NextAuthOptions = {
           console.log("Perfil do Facebook recebido:", profile);
           await connectOnce();
 
+          // Procura o usuário no banco de dados
           let user = await User.findOne({ email: profile.email });
           if (!user) {
-            console.log("Criando novo usuário para o perfil do Facebook...");
+            console.log("Criando novo usuário do Facebook...");
             user = new User({
               name: profile.name,
               email: profile.email,
@@ -99,7 +106,6 @@ const authOptions: NextAuthOptions = {
               image: profile.picture?.data?.url || genericAvatar,
             });
             await user.save({ validateBeforeSave: false });
-            console.log("Usuário do Facebook salvo:", user);
           }
 
           return {
@@ -111,13 +117,16 @@ const authOptions: NextAuthOptions = {
           };
         } catch (error) {
           console.error("Erro ao processar perfil do Facebook:", error.message);
-          throw new Error("Erro ao processar perfil do Facebook. Por favor, tente novamente.");
+          throw new Error("Erro ao processar perfil do Facebook.");
         }
       },
     }),
   ],
 
   callbacks: {
+    /**
+     * Callback JWT: Adiciona informações personalizadas ao token
+     */
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role || "user";
@@ -127,6 +136,9 @@ const authOptions: NextAuthOptions = {
       }
       return token;
     },
+    /**
+     * Callback Session: Adiciona dados personalizados à sessão
+     */
     async session({ session, token }) {
       session.user = {
         ...session.user,
@@ -139,18 +151,30 @@ const authOptions: NextAuthOptions = {
     },
   },
 
+  /**
+   * Páginas personalizadas
+   */
   pages: {
     signIn: "/login",
     error: "/error",
     signOut: "/",
   },
 
+  /**
+   * Estratégia de sessão
+   */
   session: {
-    strategy: "jwt",
+    strategy: "jwt", // Usando JWT para persistir sessões
   },
 
+  /**
+   * Configuração secreta
+   */
   secret: process.env.NEXTAUTH_SECRET,
 };
 
+/**
+ * Handlers para Next.js API routes
+ */
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
