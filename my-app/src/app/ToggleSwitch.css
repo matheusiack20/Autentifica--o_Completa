@@ -1,3 +1,5 @@
+/* src\app\ToggleSwitch.css */
+
 /* Conteudo do Botao de Alternancia */
 .toggle-container {
   display: flex;
@@ -157,4 +159,37 @@
   margin: 5px 0;
   display: flex;
   align-items: center;
+}
+
+/* Responsividade 860px */
+
+@media (max-width: 860px) {
+  .toggle-switch {
+    display: flex;
+    width: 250px;
+    height: 40px;
+    background-color: #e5e5e5;
+    border-radius: 30px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 10px;
+  }
+
+  .toggle-option {
+    flex: 1;
+    text-align: center;
+    line-height: 40px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    transition: color 0.3s;
+    z-index: 1;
+  }
+
+}
+
+/* Responsividade para telas 360px */
+@media (max-width: 360px) {
+
 }

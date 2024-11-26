@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from "next/image";
-import imageteste from "/public/anuncIA logo[1].png"
+import imageteste from "/public/anuncIAlogo[1].png"
 
 export default function PoliticaDePrivacidade() {
   return (
     <main
       style={{
-        marginTop: '80px', // Espaço para evitar sobreposição com o header
+        marginTop: '0', // Espaço para evitar sobreposição com o header
         padding: '20px',
         color: 'black',
         textAlign: 'center',

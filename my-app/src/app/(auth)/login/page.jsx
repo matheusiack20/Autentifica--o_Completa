@@ -7,11 +7,11 @@ import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { FaFacebook } from 'react-icons/fa'; // Ícone do Facebook
+import { FcGoogle } from 'react-icons/fc'; // Ícone do Google
 import imglogo from '/public/LogoMAP.png'; // Caminho da imagem do logo
-import logoFace from '/public/Facebookapp.png'; // Caminho do logo do Facebook
-import logoGoogle from '/public/googlelogo.png'; // Caminho do logo do Google
-import eyeIcon from '/public/icons/olhofechado.png'; // Caminho do ícone de mostrar senha
-import eyeClosed from '/public/icons/olhoaberto.png'; // Caminho do ícone de ocultar senha
+import eyeIcon from '/public/icons/olhofechado.png'; // Ícone para mostrar senha
+import eyeClosed from '/public/icons/olhoaberto.png'; // Ícone para ocultar senha
 
 export default function Login() {
   const router = useRouter();
@@ -53,8 +53,6 @@ export default function Login() {
         redirect: false, // Mantemos isso para gerenciar o redirecionamento manualmente
       });
 
-      console.log('Resultado do login:', result);
-
       if (result?.error) {
         setError(result.error.replace('Error: ', '')); // Exibe mensagem de erro
         resetForm();
@@ -84,44 +82,45 @@ export default function Login() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-black">
+    <main className="min-h-[80svh] flex items-center justify-center bg-black px-4">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] min-w-[450px] shadow-md rounded-3xl">
-            <Image className="min-w-[150px] w-px" src={imglogo} alt="Logo" />
+          <Form className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] w-full max-w-sm shadow-md rounded-3xl">
+            <Link href="/" passHref>
+              <div className="flex justify-center mb-4">
+                <Image src={imglogo} alt="Logo" width={150} height={150} />
+              </div>
+            </Link>
 
-            <h2 className="text-[#d4ef00] text-center">
+            <h2 className="text-[#d4ef00] text-center text-xl font-semibold">
               Faça o seu Login para continuar:
             </h2>
 
             <div className="flex justify-center gap-4 mb-4">
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('facebook')}
-                className="flex bg-black p-2 text-white w-1/2 rounded-full items-center hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
-                aria-label="Login com Facebook"
-              >
-                <Image className="min-w-[20px]" src={logoFace} alt="Facebook" />
-                Facebook
-              </button>
+            <button
+  type="button"
+  onClick={() => handleSocialLogin('facebook')}
+  className="flex items-center justify-center bg-black text-white w-1/2 py-2 rounded-full hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
+  aria-label="Login com Facebook"
+>
+  <FaFacebook className="mr-2 text-xl sm:text-2xl md:text-3xl" /> {/* Ajuste responsivo */}
+  Facebook
+</button>
 
-              <button
-                type="button"
-                onClick={() => handleSocialLogin('google')}
-                className="flex bg-black pl-10 text-white w-1/2 rounded-full items-center hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
-                aria-label="Login com Google"
-              >
-                <Image
-                  className="min-w-[20px] mr-2"
-                  src={logoGoogle}
-                  alt="Google"
-                />
-                Google
-              </button>
+<button
+  type="button"
+  onClick={() => handleSocialLogin('google')}
+  className="flex items-center justify-center bg-black text-white w-1/2 py-2 rounded-full hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
+  aria-label="Login com Google"
+>
+  <FcGoogle className="mr-2 text-xl sm:text-2xl md:text-3xl" /> {/* Ajuste responsivo */}
+  Google
+</button>
+
             </div>
 
             <div className="flex flex-col">

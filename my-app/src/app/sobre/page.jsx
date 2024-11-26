@@ -50,7 +50,7 @@ export default function PublicPage() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-black text-white">
+    <main className="flex flex-col items-center justify-center min-h-[80svh] bg-black text-white">
       <h2 ref={planSectionRef} className="text-4xl font-bold text-center mb-8 text-[#DAFD00]">
         Escolha o melhor plano para você
       </h2>

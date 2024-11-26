@@ -1,16 +1,15 @@
-/* Ajustar o container geral para a tela toda */
+/* Container geral ajustado para a tela toda */
 .containerhome {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100vh; /* Ocupa a altura total da viewport */
-    padding-top: 80px; /* Espaçamento para evitar sobreposição do header */
-    padding-bottom: 0px;
+    flex-wrap: nowrap;
+    padding: 0;
     background-color: white;
     position: relative;
 }
 
-/* Estilo para a imagem da inteligência artificial à esquerda */
+/* Imagem à esquerda */
 .containerhome img {
     max-width: 38vw;
     height: auto;
@@ -18,94 +17,130 @@
     z-index: 0;
 }
 
-/* Box com conteúdo centralizado */
+/* Box de conteúdo */
 .boxinit {
-    max-width: 50%; /* Aumenta o espaço para o texto e o botão */
+    max-width: 50%;
     padding: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
+    justify-content: center;
     align-items: center;
     margin-bottom: 50px;
 }
 
+/* Estilos do título (h2) */
 h2 {
-    font-size: 42px; /* Aumenta o tamanho do texto */
-    /* margin-top: 0px; */
+    font-size: 42px;
     color: black;
     line-height: 1.4;
 }
 
-
-
-
-@keyframes gradientButton {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 50% 100%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
+/* Estilos do botão */
 #buttoninit {
-    background: linear-gradient(90deg, #fff, #DAFD00,#fff, #DAFD00); /* cores para o degradê */
+    background: linear-gradient(90deg, #fff, #DAFD00, #fff, #DAFD00);
     background-size: 400% 400%;
     color: black;
     font-weight: bold;
-    font-size: 18px;
-    padding: 15px 25px;
+    font-size: 14px;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     width: 250px;
-    margin-top: 50px;
+    height: auto;
+    margin-top: 30px;
     cursor: pointer;
-    transition: background 0.0s ease;
+    transition: background 0.3s ease;
     animation: gradientButton 2s ease infinite;
 }
 
-/* Ajustar responsividade */
-@media (max-width: 768px) {
-    .containerhome {
-        flex-direction: column;
-        justify-content: center;
-        padding-top: 60px;
-    }
+/* Animação do botão */
+@keyframes gradientButton {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 50% 100%; }
+    100% { background-position: 0% 50%; }
+}
 
-    .containerhome img {
-        max-width: 40%;
-        margin-bottom: 20px;
-    }
-
-    .boxinit {
-        max-width: 100%;
-        text-align: center;
-    }
-
+/* Responsividade para telas menores */
+@media (max-width: 860px) {
     h2 {
-        font-size: 24px;
+        font-size: 10px;
+        color: black;
     }
 
     #buttoninit {
-        font-size: 14px;
-        padding: 10px 20px;
+        font-size: 8px !important;
+        padding: 4px 6px !important;
+        width: 100px !important;
+        /* height: 28px !important; */
+    }
+
+    #saibamaispersona{
+        font-size: 8px !important;
+        padding: 4px 6px !important;
+        width: 100px !important;
+        margin-bottom: 20px !important;
+        /* height: 28px !important; */
     }
 }
 
+/* Responsividade para telas 360px */
+@media (max-width: 360px) {
+    .containerhome {
+        display: flex; /* Garante que os itens continuem lado a lado */
+        flex-direction: row; /* Garante o alinhamento horizontal */
+        justify-content: space-between; /* Espaçamento entre os itens */
+        align-items: center; /* Alinha os itens ao centro */
+    }
 
-/* Botao de Alternancia */
+    .containerhome img {
+        max-width: 40vw; /* Ajusta a largura da imagem */
+        height: auto;
+        margin-left: 0;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
 
+    .boxinit {
+        max-width: 100%; /* Ajusta o tamanho da caixa de conteúdo */
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h2 {
+        font-size: 8px; /* Ajuste do tamanho do título */
+    }
+
+    #buttoninit {
+        width: 70% !important; /* Faz o botão ocupar 80% da largura disponível */
+        font-size: 7px !important; /* Ajusta o tamanho da fonte */
+        padding: 2px 4px !important; 
+        white-space: nowrap !important; /* Impede o botão de quebrar o texto */
+        overflow: hidden !important; /* Garante que o texto não ultrapasse os limites do botão */
+        align-items: center !important;
+    }
+
+    #saibamaispersona{
+        font-size: 8px !important;
+        padding: 6px 8px !important;
+        width: 110px !important;
+        margin-bottom: 20px !important;
+        /* height: 28px !important; */
+    }
+}
+
+/* Botão de Alternância */
 .toggle-button {
     display: inline-flex;
-    border: 1px solid #000; /* Borda preta */
-    border-radius: 25px; /* Bordas arredondadas */
+    border: 1px solid #000;
+    border-radius: 25px;
     overflow: hidden;
-    font-family: Arial, sans-serif;
-    background-color: #fff; /* Fundo branco */
+    background-color: #fff;
+    font-family: "nasalization";
 }
 
 .toggle-button input[type="radio"] {
@@ -115,24 +150,24 @@ h2 {
 .toggle-button label {
     padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    color: #000; /* Cor do texto */
-    background-color: #fff; /* Fundo padrão branco */
-    border-radius: 25px; /* Bordas arredondadas */
+    transition: background-color 0.3s, color 0.3s;
+    color: #000;
+    background-color: #fff;
+    border-radius: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-weight: bold; /* Texto mais forte */
+    font-weight: bold;
 }
 
 .toggle-button label:first-of-type {
-    border-right: 1px solid #ccc; /* Linha divisória entre as opções */
+    border-right: 1px solid #ccc;
 }
 
 .toggle-button input[type="radio"]:checked + label {
-    background-color: #DAFD00; /* Cor de destaque (amarelo neon) */
-    color: #000; /* Cor do texto quando selecionado */
+    background-color: #DAFD00;
+    color: #000;
 }
 
 .toggle-button label span {
@@ -143,5 +178,5 @@ h2 {
 }
 
 .toggle-button input[type="radio"]:checked + label span {
-    color: #000; /* Cor do texto menor quando selecionado */
+    color: #000;
 }

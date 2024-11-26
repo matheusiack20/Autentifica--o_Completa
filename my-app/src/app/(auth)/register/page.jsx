@@ -8,8 +8,9 @@ import { signIn, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import imglogo from '/public/LogoMAP.png';
-import eyeOpen from '/public/icons/olhofechado.png'; // Caminho do ícone de mostrar senha
-import eyeClosed from '/public/icons/olhoaberto.png'; // Caminho do ícone de ocultar senha
+import eyeOpen from '/public/icons/olhoaberto.png'; // Caminho do ícone de mostrar senha
+import eyeClosed from '/public/icons/olhofechado.png'; // Caminho do ícone de ocultar senha
+
 
 const InputField = ({
   label,
@@ -123,7 +124,7 @@ export default function Register() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-black pt-40 pb-20">
+    <main className="min-h-[90vh] flex items-center justify-center bg-black mb-[5px] px-4 sm:px-6 lg:px-8">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -132,16 +133,18 @@ export default function Register() {
         {({ isSubmitting }) => (
           <Form
             noValidate
-            className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] min-w-[450px] shadow-md rounded-3xl"
+            className="flex flex-col gap-4 p-6 border-2 border-[#d4ef00] bg-[#2C2C2C] max-w-[450px] w-full shadow-md rounded-3xl"
           >
-            <Image
-              className="min-w-[150px] w-px"
-              src={imglogo}
-              alt="Logo MAP"
-            />
+            <Link href="/" passHref>
+              <Image
+                className="min-w-[150px] w-px mx-auto"
+                src={imglogo}
+                alt="Logo MAP"
+              />
+              </Link>
 
-            <h2 className="text-[#d4ef00] text-center">Bem Vindo!</h2>
-            <h3 className="text-[#d4ef00] text-center">Faça seu cadastro!</h3>
+            <h2 className="text-[#d4ef00] text-center text-xl sm:text-2xl">Bem Vindo!</h2>
+            <h3 className="text-[#d4ef00] text-center text-sm sm:text-base">Faça seu cadastro!</h3>
 
             <InputField
               label="Nome Completo"
@@ -207,7 +210,9 @@ export default function Register() {
             <center>
               <button
                 type="submit"
-                className={`p-2 bg-gradient-to-r from-[#1d1d1f] via-[#DAFD00] to-[#1d1d1f] rounded-md text-center w-[200px] ${isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                className={`p-2 bg-gradient-to-r from-[#1d1d1f] via-[#DAFD00] to-[#1d1d1f] rounded-md text-center w-[200px] ${
+                  isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                }`}
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'Carregando...' : 'Criar Conta'}
@@ -230,17 +235,17 @@ export default function Register() {
             {showTermsModal && (
               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                 <div className="bg-white p-4 rounded-md max-w-md">
-                  <h2 className="text-center font-bold text-lg mb-2">
+                  <h2 className="text-center font-bold text-[black] mb-2">
                     Termos de Uso
                   </h2>
                   <div className="overflow-y-scroll max-h-64 p-2 border">
-                    <p className="text-sm mb-4">
+                    <p className="text-[black] mb-4">
                       Bem-vindo à MAP. Ao utilizar nossos serviços, você
                       concorda com os seguintes Termos de Serviço. Leia
                       atentamente cada item, pois ele descreve os direitos e
                       responsabilidades dos usuários.
                     </p>
-                    <p className="text-sm">
+                    <p className="text-[black]">
                       <b>1. Aceitação dos Termos</b>
                       <br />
                       Ao criar uma conta e acessar ou utilizar nossos serviços,

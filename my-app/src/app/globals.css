@@ -5,8 +5,8 @@
 
 /* Variáveis de tema claro */
 :root {
-  --background: #000000;
-  --foreground: #ededed;
+  --background: #000;
+  --foreground: #000000;
 }
 
 /* Variáveis para tema escuro */
@@ -17,31 +17,76 @@
   }
 }
 
-
-
-
 /* Estilização global do body */
 body {
   @apply text-base leading-relaxed; /* Adiciona utilidades Tailwind */
-  color: black;
+  color: var(--foreground);
   background-color: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  }
+
+@font-face {
+    font-family: "nasalization";
+    src: url("../../public/nasalization-rg.otf");
+  }
+.nasalization {
+    font-family: "nasalization";
+  }
+
+/* Estilização da seção principal */
+.containerhome {
+  @apply flex items-center justify-between flex-wrap py-10 px-5 gap-6;
 }
 
-/* Camada de utilidades customizadas do Tailwind */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance; /* Alinha textos com boa distribuição */
+.imagem-left {
+  @apply max-w-[200px] flex-shrink-0; /* Imagem com largura fixa */
+}
+
+.boxinit {
+  @apply flex-1 text-left; /* Alinha o conteúdo à esquerda */
+}
+
+h2 {
+  @apply text-2xl font-semibold mb-4;
+}
+
+#buttoninit {
+  @apply inline-block px-6 py-3 bg-yellow-400 text-black rounded-lg hover:bg-yellow-300 transition;
+}
+
+/* Responsividade */
+@media (max-width: 360px) {
+  .containerhome {
+    @apply flex-col text-center; /* Alinha conteúdo em coluna */
+  }
+
+  .imagem-left {
+    @apply mx-auto mb-6; /* Centraliza a imagem */
+  }
+
+  .boxinit {
+    @apply text-center; /* Centraliza o texto e botão */
+  }
+
+  h2 {
+    @apply text-xl; /* Reduz o tamanho do título */
+  }
+
+  #buttoninit {
+    @apply w-full text-lg;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    @apply text-lg; /* Reduz ainda mais o título */
+  }
+
+  #buttoninit {
+    @apply text-base;
   }
 }
 
 
-@font-face {
-  font-family: "nasalization";
-  src: url("../../public/nasalization-rg.otf");
-}
 
-.nasalization {
-  font-family: "nasalization";
-}
+
 
