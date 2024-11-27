@@ -1,143 +1,139 @@
-'use client';
+'use client'
+import React, { useState } from "react";
 
-import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import "./pagepublic.css";
-
-export default function PublicPage() {
+const Planos = () => {
   const [planType, setPlanType] = useState("anual");
-  const planSectionRef = useRef(null);
-  const router = useRouter();
-  const { data: session } = useSession();
 
-  const handlePlanTypeChange = (selectedPlanType) => {
-    setPlanType(selectedPlanType);
+  const handlePlanTypeChange = (type) => {
+    setPlanType(type);
   };
 
-  const handleSubscriptionClick = async (selectedPlanType, productType, setButtonLoading) => {
-    if (!session) {
-      router.push("/login"); // Redireciona para a página de login se o usuário não estiver autenticado
-      return;
-    }
-
-    setButtonLoading(true);
-
-    try {
-      const response = await fetch("/api/user/createcheck", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          planType: selectedPlanType,
-          productType: productType.toLowerCase(), // Envia o tipo de produto em minúsculas
-        }),
-      });
-
-      if (response.ok) {
-        const { url } = await response.json();
-        window.location.href = url; // Redireciona para o gateway de pagamento
-      } else {
-        const errorResponse = await response.json();
-        console.error("Erro:", errorResponse.error);
-        alert(`Erro: ${errorResponse.error}`);
-      }
-    } catch (error) {
-      console.error("Erro ao processar a assinatura:", error.message);
-      alert("Erro inesperado. Tente novamente mais tarde.");
-    } finally {
-      setButtonLoading(false);
-    }
+  const plans = {
+    anual: [
+      {
+        id: 1,
+        title: "Plano Anual Olist",
+        price: "R$ 1.900",
+        originalPrice: "R$ 2.400",
+        description: "Economize até R$ 500 com a oferta",
+        features: [
+          "Acesso ilimitado",
+          "Suporte 24 hrs",
+          "Funcionalidades premium",
+        ],
+      },
+      {
+        id: 2,
+        title: "Plano Anual Bling",
+        price: "R$ 1.900",
+        originalPrice: "R$ 2.400",
+        description: "Economize até R$ 500 com a oferta",
+        features: [
+          "Acesso ilimitado",
+          "Suporte 24 hrs",
+          "Funcionalidades premium",
+        ],
+      },
+    ],
+    mensal: [
+      {
+        id: 1,
+        title: "Plano Mensal Olist",
+        price: "R$ 190",
+        originalPrice: "R$ 220",
+        description: "Economize até R$ 30 com a oferta",
+        features: [
+          "Acesso ilimitado",
+          "Suporte 24 hrs",
+          "Funcionalidades premium",
+        ],
+      },
+      {
+        id: 2,
+        title: "Plano Mensal Bling",
+        price: "R$ 190",
+        originalPrice: "R$ 220",
+        description: "Economize até R$ 30 com a oferta",
+        features: [
+          "Acesso ilimitado",
+          "Suporte 24 hrs",
+          "Funcionalidades premium",
+        ],
+      },
+    ],
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-[80svh] bg-black text-white">
-      <h2 ref={planSectionRef} className="text-4xl font-bold text-center mb-8 text-[#DAFD00]">
-        Escolha o melhor plano para você
-      </h2>
-      <div className="flex justify-center mb-8">
-        <div className="flex border-2 border-gray-400 rounded-full overflow-hidden">
-          <button
-            className={`px-10 py-3 ${planType === "anual" ? "bg-[#DAFD00] text-black font-semibold" : "bg-gray-300 text-gray-800"} transition-all duration-300`}
-            onClick={() => handlePlanTypeChange("anual")}
-          >
-            Anual
-          </button>
-          <button
-            className={`px-10 py-3 ${planType === "mensal" ? "bg-[#DAFD00] text-black font-semibold" : "bg-gray-300 text-gray-800"} transition-all duration-300`}
-            onClick={() => handlePlanTypeChange("mensal")}
-          >
-            Mensal
-          </button>
+    <div className="bg-black text-white min-h-screen">
+      <div className="container mx-auto px-6 py-12">
+        {/* Título */}
+        <div className="text-center">
+          <h1 className="text-4xl text-[#DAFD00] font-bold mb-4">
+            Escolha o melhor plano para você
+          </h1>
+          <br />
+        </div>
+
+        {/* Botão de Alternância */}
+        <div className="flex justify-center mb-8">
+          <div className="relative flex bg-gray-300 rounded-full overflow-hidden w-72 h-12 border-2 border-[#DAFD00]">
+            <button
+              className={`flex-1 text-center text-lg font-semibold py-2 transition-all duration-300 ${
+                planType === "anual"
+                  ? "bg-[#DAFD00] text-black shadow-md"
+                  : "bg-transparent text-gray-800"
+              }`}
+              onClick={() => handlePlanTypeChange("anual")}
+            >
+              Anual
+            </button>
+            <button
+              className={`flex-1 text-center text-lg font-semibold py-2 transition-all duration-300 ${
+                planType === "mensal"
+                  ? "bg-[#DAFD00] text-black shadow-md"
+                  : "bg-transparent text-gray-800"
+              }`}
+              onClick={() => handlePlanTypeChange("mensal")}
+            >
+              Mensal
+            </button>
+          </div>
+        </div>
+
+        {/* Cards de Planos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {plans[planType].map((plan) => (
+            <div
+              key={plan.id}
+              className="bg-white text-black rounded-lg shadow-lg p-6 border-4 border-[#DAFD00]"
+            >
+              <center>
+              <h2 className="text-xl font-bold mb-4">{plan.title}</h2>
+              <p className="text-gray-500 line-through">{plan.originalPrice}</p>
+              <p className="text-3xl font-bold text-black">{plan.price}</p>
+              <p className="text-green-600 font-medium">{plan.description}</p>
+              <ul className="mt-4 space-y-2">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className="flex items-center">
+                    <span className="text-green-500 mr-2">✔</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <button className="mt-6 w-full bg-black text-white py-2 rounded-md hover:bg-[#333]">
+                Assinar Agora
+              </button>
+              </center> 
+            </div>
+          ))}
         </div>
       </div>
-
-      <div className="flex flex-wrap justify-center gap-8 max-w-screen-lg">
-        {planType === "mensal" ? (
-          <>
-            <PlanCard 
-              title="Plano Mensal Olist" 
-              originalPrice="R$ 220" 
-              discountedPrice="R$ 190" 
-              duration="por 1 ano" 
-              discount="Economize até R$ 30 com a oferta"
-              onSubscribeClick={(setButtonLoading) => handleSubscriptionClick("mensal", "Olist", setButtonLoading)}
-            />
-            <PlanCard 
-              title="Plano Mensal Bling" 
-              originalPrice="R$ 220" 
-              discountedPrice="R$ 190" 
-              duration="por 1 ano" 
-              discount="Economize até R$ 30 com a oferta"
-              onSubscribeClick={(setButtonLoading) => handleSubscriptionClick("mensal", "Bling", setButtonLoading)}
-            />
-          </>
-        ) : (
-          <>
-            <PlanCard 
-              title="Plano Anual Olist" 
-              originalPrice="R$ 2.400" 
-              discountedPrice="R$ 1.900" 
-              duration="por 1 ano" 
-              discount="Economize até R$ 500 com a oferta"
-              onSubscribeClick={(setButtonLoading) => handleSubscriptionClick("anual", "Olist", setButtonLoading)}
-            />
-            <PlanCard 
-              title="Plano Anual Bling" 
-              originalPrice="R$ 2.400" 
-              discountedPrice="R$ 1.900" 
-              duration="por 1 ano" 
-              discount="Economize até R$ 500 com a oferta"
-              onSubscribeClick={(setButtonLoading) => handleSubscriptionClick("anual", "Bling", setButtonLoading)}
-            />
-          </>
-        )}
-      </div>
-    </main>
-  );
-}
-
-function PlanCard({ title, originalPrice, discountedPrice, duration, discount, onSubscribeClick }) {
-  const [buttonLoading, setButtonLoading] = useState(false);
-
-  return (
-    <div className="w-80 p-6 rounded-lg border-4 border-[#DAFD00] bg-white text-center shadow-lg">
-      <h3 className="text-xl font-semibold mb-2 text-black">{title}</h3>
-      <p className="text-gray-500 line-through">{originalPrice}</p>
-      <p className="text-3xl font-bold text-black">{discountedPrice}</p>
-      <p className="text-gray-500 mb-4">{duration}</p>
-      <p className="text-green-800 mb-4">{discount}</p>
-      <button
-        className="px-6 py-2 bg-black text-white border border-black rounded-lg hover:bg-[#DAFD00] hover:text-black transition-all duration-300"
-        onClick={() => onSubscribeClick(setButtonLoading)}
-        disabled={buttonLoading}
-      >
-        {buttonLoading ? "Processando..." : "Assinar Agora"}
-      </button>
-      <ul className="text-left mt-4 text-green-700 space-y-1">
-        <li>✓ Acesso ilimitado</li>
-        <li>✓ Suporte 24 hrs</li>
-        <li>✓ Funcionalidades premium</li>
-      </ul>
+      
+      {/* Rodapé */}
+      <footer className="text-center mt-12">
+      </footer>
     </div>
   );
-}
+};
+
+export default Planos;

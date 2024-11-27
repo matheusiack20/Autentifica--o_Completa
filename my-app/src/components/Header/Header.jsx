@@ -56,7 +56,7 @@ export default function Header() {
           <Image
             src={imglogo}
             alt="Logo MAP"
-            width={150}
+            width={120}
             height={100}
             className="cursor-pointer"
           />

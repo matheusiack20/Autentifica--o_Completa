@@ -121,7 +121,7 @@ export default function Home() {
         <br />
         
         <button id="saibamaispersona" onClick={scrollToPlans}>
-          Experimentar
+          Experimentar Agora
         </button>
       </section>
 

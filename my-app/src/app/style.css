@@ -52,6 +52,7 @@ h2 {
     cursor: pointer;
     transition: background 0.3s ease;
     animation: gradientButton 2s ease infinite;
+    font-family: "nasalization";
 }
 
 /* Animação do botão */

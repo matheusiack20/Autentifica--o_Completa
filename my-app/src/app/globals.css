@@ -22,15 +22,17 @@ body {
   @apply text-base leading-relaxed; /* Adiciona utilidades Tailwind */
   color: var(--foreground);
   background-color: var(--background);
-  }
+  font-family: "nasalization"; /* Aplica a fonte nasalization */
+}
 
 @font-face {
-    font-family: "nasalization";
-    src: url("../../public/nasalization-rg.otf");
-  }
+  font-family: "nasalization";
+  src: url("../../public/nasalization-rg.otf");
+}
+
 .nasalization {
-    font-family: "nasalization";
-  }
+  font-family: "nasalization", sans-serif; /* Aplica a fonte nasalization */
+}
 
 /* Estilização da seção principal */
 .containerhome {
@@ -46,7 +48,7 @@ body {
 }
 
 h2 {
-  @apply text-2xl font-semibold mb-4;
+  @apply text-2xl font-semibold mb-4 nasalization; /* Aplica a fonte nasalization ao título */
 }
 
 #buttoninit {
@@ -85,8 +87,3 @@ h2 {
     @apply text-base;
   }
 }
-
-
-
-
-
