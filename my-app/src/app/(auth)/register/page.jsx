@@ -39,8 +39,8 @@ const InputField = ({
       <button
         type="button"
         onClick={onToggle}
-        className="absolute right-3 top-10"
-      >
+        className="absolute right-3 top-10 bg-yellow-400 rounded-full focus:ring-yellow-500" 
+        style={{ padding: "1px 10px" }}>
         <Image
           src={isPasswordVisible ? eyeOpen : eyeClosed}
           alt={isPasswordVisible ? 'Ocultar senha' : 'Mostrar senha'}
@@ -195,7 +195,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={() => setShowTermsModal(true)}
-                  className="text-[#DAFD00] underline"
+                  className="termos-de-uso"
                 >
                   Termos de Uso
                 </button>

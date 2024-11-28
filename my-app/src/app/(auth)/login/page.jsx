@@ -157,7 +157,8 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-10"
+                className="absolute right-3 top-10 bg-yellow-400 rounded-full focus:ring-yellow-500" 
+                style={{ padding: "1px 10px" }}
                 aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
               >
                 <Image
