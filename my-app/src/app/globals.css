@@ -24,6 +24,22 @@ body {
   background-color: var(--background);
   font-family: "nasalization"; /* Aplica a fonte nasalization */
 }
+button.termos-de-uso {
+  color: #DAFD00; /* Cor amarela */
+  text-decoration: underline; /* Subtítulo destacado */
+  background-color: transparent; /* Fundo transparente */
+  border: none; /* Remove borda padrão de botões */
+  padding: 0; /* Remove padding padrão de botões */
+  font-size: 0.875rem; /* Ajusta tamanho do texto */
+  cursor: pointer; /* Mostra o cursor como clicável */
+  transition: color 0.3s ease, text-decoration-color 0.3s ease; /* Animações */
+}
+
+button.termos-de-uso:hover {
+  color: #FFFFFF; /* Muda para branco ao passar o mouse */
+  text-decoration-color: #DAFD00; /* Cor da underline permanece amarela */
+  text-decoration-thickness: 2px; /* Espessura maior para destaque */
+}
 
 @font-face {
   font-family: "nasalization";
