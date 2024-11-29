@@ -239,13 +239,13 @@ export default function Register() {
                     Termos de Uso
                   </h2>
                   <div className="overflow-y-scroll max-h-64 p-2 border">
-                    <p className="text-[black] mb-4">
+                    <p className="text-[black] mb-4 text-justify">
                       Bem-vindo à MAP. Ao utilizar nossos serviços, você
                       concorda com os seguintes Termos de Serviço. Leia
                       atentamente cada item, pois ele descreve os direitos e
                       responsabilidades dos usuários.
                     </p>
-                    <p className="text-[black]">
+                    <p className="text-[black] text-justify">
                       <b>1. Aceitação dos Termos</b>
                       <br/>
                       Ao utilizar os serviços da plataforma Map Marketplaces,
