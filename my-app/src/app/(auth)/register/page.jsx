@@ -234,7 +234,7 @@ export default function Register() {
 
             {showTermsModal && (
               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white p-4 rounded-md max-w-md">
+                <div className="bg-white p-4 rounded-md max-w-xl">
                   <h2 className="text-center font-bold text-[black] mb-2">
                     Termos de Uso
                   </h2>
@@ -268,7 +268,7 @@ export default function Register() {
                       <br/>
                       <b>3. Informações da conta</b>
                       <br/>
-                      A privacidade e segurança dos seus dados são prioridades para o Map Marketplaces.
+                      A privacidade e segurança dos seus dados são prioridades para a Map Marketplaces.
                       Ao utilizar nossa plataforma, você concorda com a coleta, processamento e uso dos
                       seus dados pessoais de acordo com nossa Política de Privacidade.
                       Os dados coletados serão utilizados exclusivamente para a prestação dos serviços,
@@ -295,11 +295,15 @@ export default function Register() {
                       criação de anúncios são verdadeiras, completas e legais. O usuário é integralmente responsável
                       pelo conteúdo dos anúncios, incluindo o cumprimento das normas aplicáveis, como legislações de
                       publicidade, direitos autorais, e regulamentos específicos das plataformas integradas.
-                      O usuário também se compromete a não utilizar o serviço para criar ou publicar anúncios que contenham
-                      conteúdo impróprio, ilegal, ofensivo ou que viole as políticas das plataformas parceiras, como Bling
-                      e Olist. Caso isso ocorra, a Map Marketplaces se reserva o direito de suspender ou encerrar a conta
+                      O usuário também se compromete a não utilizar o serviço para criar ou publicar anúncios que
+                      contenham
+                      conteúdo impróprio, ilegal, ofensivo ou que viole as políticas das plataformas parceiras, como
+                      Bling
+                      e Olist. Caso isso ocorra, a Map Marketplaces se reserva o direito de suspender ou encerrar a
+                      conta
                       do usuário sem aviso prévio.
-                      Além disso, o usuário reconhece que é sua responsabilidade revisar e aprovar o anúncio antes de sua
+                      Além disso, o usuário reconhece que é sua responsabilidade revisar e aprovar o anúncio antes de
+                      sua
                       publicação nas plataformas integradas.
                       <br/>
                       <br/>
@@ -311,24 +315,55 @@ export default function Register() {
                       alterações na estrutura do serviço ou remoção de funcionalidades.
 
                       Sempre que possível, notificaremos os usuários sobre alterações significativas, mas o uso contínuo
-                      da plataforma após a implementação das mudanças será considerado como aceitação das mesmas. O Map
-                      Marketplaces não se responsabiliza por eventuais impactos causados por tais modificações, desde que estejam
+                      da plataforma após a implementação das mudanças será considerado como aceitação das mesmas. A Map
+                      Marketplaces não se responsabiliza por eventuais impactos causados por tais modificações, desde
+                      que estejam
                       de acordo com os presentes Termos de Uso.
                       <br/>
                       <br/>
                       <b>6. Limitação de Responsabilidade</b>
                       <br/>
-                      Não nos responsabilizamos por quaisquer danos diretos,
-                      indiretos, incidentais ou punitivos resultantes do uso ou
-                      da incapacidade de uso do serviço.
+                      A Map Marketplaces oferece seus serviços "como estão", sem garantia de resultados específicos,
+                      como aumento de vendas, visibilidade ou sucesso dos anúncios gerados e publicados. Não somos
+                      responsáveis por falhas técnicas, indisponibilidades ou problemas relacionados a plataformas
+                      de terceiros, como Bling e Olist, nem por eventuais modificações feitas por essas plataformas
+                      que afetem as integrações com nosso sistema.
+
+                      O usuário reconhece que é responsável por revisar os anúncios antes da publicação e assegurar
+                      que o conteúdo esteja em conformidade com as leis e regulamentos aplicáveis. A Map Marketplaces
+                      não se responsabiliza por erros, omissões ou interpretações incorretas nos anúncios criados com
+                      base nas informações fornecidas pelo usuário.
+
+                      Em nenhuma circunstância a Map Marketplaces será responsável por perdas financeiras, danos
+                      incidentais,
+                      indiretos ou consequentes, incluindo lucros cessantes, interrupção de negócios ou perda de dados,
+                      decorrentes do uso ou incapacidade de usar nossos serviços.
                       <br/>
                       <br/>
-                      <b>7. Alterações e Cancelamento</b>
+                      <b>7. Cancelamento</b>
                       <br/>
-                      Reservamo-nos o direito de modificar ou encerrar a conta
-                      de um usuário que viole os termos estabelecidos. Você pode
-                      cancelar sua conta a qualquer momento através das
-                      configurações da sua conta.
+                      Após o cancelamento, sua assinatura permanecerá ativa até o final do período de cobrança atual,
+                      permitindo acesso contínuo aos serviços até o término desse período (exceto nos casos em que seu
+                      acesso seja suspenso ou encerrado conforme disposto abaixo). No entanto, você não terá direito a
+                      reembolso por valores já pagos.
+
+                      A Map Marketplaces reserva-se o direito de negar acesso a todos ou parte dos serviços ou encerrar
+                      sua conta, com ou sem aviso prévio, caso seja identificada qualquer conduta ou atividade que viole
+                      estes Termos de Uso, os direitos da Map Marketplaces, ou que seja considerada inadequada ou
+                      prejudicial, a exclusivo critério da empresa. Em tais casos, o cancelamento ou suspensão não dará
+                      direito a reembolso.
+                      <br/>
+                      <br/>
+                      <b>8. Atividades Bancárias</b>
+                      <br/>
+                      Utilizamos serviços de terceiros para fins de processamento de quaisquer fundos como parte de nossos
+                      serviços. Não rastreamos ou retemos nenhuma informação sobre o uso de suas informações bancárias,
+                      incluindo, mas não se limitando a nomes de usuário e senhas. Não aceitamos nenhuma responsabilidade
+                      ou segurança pelo uso de nossos serviços no que se refere à proteção de suas informações bancárias.
+                      Embora nos esforcemos para proteger suas informações, você usa nossos serviços NO ESTADO EM QUE SE
+                      ENCONTRAM e aceita toda a responsabilidade e risco de usar nossos serviços e serviços de terceiros.
+                      Você tem a responsabilidade exclusiva de garantir que tome as precauções necessárias para proteger
+                      suas informações privadas.
                     </p>
                   </div>
                   <div className="flex justify-center mt-4">
