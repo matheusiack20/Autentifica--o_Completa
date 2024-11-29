@@ -210,8 +210,8 @@ export default function Register() {
             <center>
               <button
                 type="submit"
-                className={`p-2 bg-gradient-to-r from-[#1d1d1f] via-[#DAFD00] to-[#1d1d1f] rounded-md text-center w-[200px] ${
-                  isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                className={`p-2 bg-[#DAFD00] rounded-md text-center w-[200px] text-[#2c2c2c] font-medium ${
+                    isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 }`}
                 disabled={isSubmitting}
               >
