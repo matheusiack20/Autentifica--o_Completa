@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import AuthProvider from "../components/AuthProvider";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/footer"; // Caminho correto
-
+import PlansPriceBoard from "../app/plansBoard"
 
 const poppins = Poppins({
   subsets: ["latin"],

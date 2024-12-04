@@ -25,6 +25,13 @@ module.exports = {
       animation: {
         gradientButton: 'gradientButton 2s ease infinite', // Define custom animation
       },
+      colors: {
+        primary: "#FFFFFF",
+        secondary: "#000000",
+        ternary: "#DAFD00",
+        olistcolor: "#0a4ee4",
+        blingcolor: "#5ac782",
+      },
     },
   },
   plugins: [],

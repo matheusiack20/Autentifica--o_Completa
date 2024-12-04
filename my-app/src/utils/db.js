@@ -15,11 +15,14 @@ export const connectOnce = async () => {
   }
 
   try {
+    console.log("Tentando conectar ao MongoDB...");
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       bufferCommands: false, // Desabilita o buffering de comandos para evitar timeouts
       serverSelectionTimeoutMS: 10000, // Timeout de 10 segundos para seleção do servidor
+      ssl: true,  // Habilita SSL se necessário
+      tlsAllowInvalidCertificates: true, // Permite certificados SSL inválidos (caso use certificado autoassinado)
     });
     isConnected = true;
     console.log("MongoDB conectado com sucesso!");
