@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,7 +13,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       backgroundSize: {
-        '400%': '400% 400%', // Extend background size to 400%
+        '400%': '400% 400%',
       },
       keyframes: {
         gradientButton: {
@@ -23,7 +23,7 @@ module.exports = {
         },
       },
       animation: {
-        gradientButton: 'gradientButton 2s ease infinite', // Define custom animation
+        gradientButton: 'gradientButton 2s ease infinite',
       },
       colors: {
         primary: "#FFFFFF",
@@ -36,3 +36,5 @@ module.exports = {
   },
   plugins: [],
 };
+
+export default config; // Use export default para ESModules

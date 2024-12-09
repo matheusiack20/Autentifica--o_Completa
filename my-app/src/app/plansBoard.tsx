@@ -39,7 +39,7 @@ const PlansPriceBoard: React.FC = () => {
                         name='Free'
                         price={0}
                         discount={0}
-                        benefits='3 dias de uso; 1 anúncio por dia; Período de Teste'
+                        benefits='1 anúncio; Período de Teste'
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}

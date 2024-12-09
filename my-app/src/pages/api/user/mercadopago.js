@@ -1,103 +1,40 @@
-// src\pages\api\user\mercadopago.js
+import mercadopago from 'mercadopago';
 
-import { loadMercadoPago } from '@mercadopago/sdk-js';
+export default async function handler(req, res) {
+    if (req.method === 'POST') {
+        const { title, unit_price, quantity } = req.body;
 
-await loadMercadoPago();
-const mp = new window.MercadoPago(MERCADO_PAGO_KEY_PUBLIC);
+        try {
+            // Inicializa o Mercado Pago com o access_token
+            mercadopago.configurations.setAccessToken(process.env.MERCADO_PAGO_ACCESS_TOKEN);
 
-const cardForm = mp.cardForm({
-  amount: '100.5',
-  iframe: true,
-  form: {
-    id: 'form-checkout',
-    cardNumber: {
-      id: 'form-checkout__cardNumber',
-      placeholder: 'Número do cartão',
-    },
-    expirationDate: {
-      id: 'form-checkout__expirationDate',
-      placeholder: 'MM/YY',
-    },
-    securityCode: {
-      id: 'form-checkout__securityCode',
-      placeholder: 'Código de segurança',
-    },
-    cardholderName: {
-      id: 'form-checkout__cardholderName',
-      placeholder: 'Titular do cartão',
-    },
-    issuer: {
-      id: 'form-checkout__issuer',
-      placeholder: 'Banco emissor',
-    },
-    installments: {
-      id: 'form-checkout__installments',
-      placeholder: 'Parcelas',
-    },
-    identificationType: {
-      id: 'form-checkout__identificationType',
-      placeholder: 'Tipo de documento',
-    },
-    identificationNumber: {
-      id: 'form-checkout__identificationNumber',
-      placeholder: 'Número do documento',
-    },
-    cardholderEmail: {
-      id: 'form-checkout__cardholderEmail',
-      placeholder: 'E-mail',
-    },
-  },
-  callbacks: {
-    onFormMounted: (error) => {
-      if (error) return console.warn('Form Mounted handling error: ', error);
-      console.log('Form mounted');
-    },
-    onSubmit: (event) => {
-      event.preventDefault();
+            // Criar a preferência de pagamento
+            const preference = await mercadopago.preferences.create({
+                items: [
+                    {
+                        title,
+                        quantity,
+                        unit_price,
+                    },
+                ],
+                back_urls: {
+                    success: `${process.env.NEXT_PUBLIC_URL}/success`,
+                    failure: `${process.env.NEXT_PUBLIC_URL}/failure`,
+                    pending: `${process.env.NEXT_PUBLIC_URL}/pending`,
+                },
+                auto_return: 'approved',
+            });
 
-      const {
-        paymentMethodId: payment_method_id,
-        issuerId: issuer_id,
-        cardholderEmail: email,
-        amount,
-        token,
-        installments,
-        identificationNumber,
-        identificationType,
-      } = cardForm.getCardFormData();
-
-      fetch('/process_payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token,
-          issuer_id,
-          payment_method_id,
-          transaction_amount: Number(amount),
-          installments: Number(installments),
-          description: 'Descrição do produto',
-          payer: {
-            email,
-            identification: {
-              type: identificationType,
-              number: identificationNumber,
-            },
-          },
-        }),
-      });
-    },
-    onFetching: (resource) => {
-      console.log('Fetching resource: ', resource);
-
-      // Animate progress bar
-      const progressBar = document.querySelector('.progress-bar');
-      progressBar.removeAttribute('value');
-
-      return () => {
-        progressBar.setAttribute('value', '0');
-      };
-    },
-  },
-});
+            // Retornar o link de pagamento
+            res.status(200).json({
+                init_point: preference.body.init_point, // Link gerado pela API do Mercado Pago
+            });
+        } catch (error) {
+            // Depuração do erro
+            console.error('Erro ao criar pagamento no Mercado Pago:', error.message);
+            res.status(500).json({ error: error.message || 'Erro ao processar pagamento' });
+        }
+    } else {
+        res.status(405).json({ error: 'Método não permitido' });
+    }
+}
