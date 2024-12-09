@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';  // Usando NextAuth.js para gerenciamento de sessão
+
 interface PlanPriceProps {
   isCheckedAnualMode: boolean;
   name: string;
@@ -13,35 +16,68 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
   discount,
   benefits,
 }) => {
+  const { data: session } = useSession();  // Obtendo a sessão do usuário logado
+  const [email, setEmail] = useState<string | null>(null);
+  const [fullName, setFullName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (session) {
+      console.log('Sessão do usuário:', session);  // Logando a sessão
+      setEmail(session.user?.email || null);
+      setFullName(session.user?.name || null);
+    }
+  }, [session]);
+
   const benefitsList = benefits
     .split(';')
     .filter((benefit) => benefit.trim() !== '');
 
-  const handleBuyNow = async () => {
-    try {
-      const response = await fetch('/api/user/mercadopago', {
-        method: 'POST', // Certifique-se de que seja POST
-        body: JSON.stringify({
-          title: 'Produto Teste',
-          unit_price: 100.0,
-          quantity: 1,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erro ao processar pagamento: ${response.statusText}`);
+    const handleBuyNow = async () => {
+      if (!email || !fullName) {
+        alert('Por favor, faça login para realizar a compra.');
+        return;
       }
-
-      const data = await response.json();
-      console.log(data); // Aqui você pode usar os dados retornados da API
-      window.location.href = data.init_point; // Redirecionar para o link de pagamento
-    } catch (error) {
-      console.error('Erro ao processar pagamento:', error);
-    }
-  };
+    
+      try {
+        // Enviar dados para a API que cria a preferência de pagamento
+        const response = await fetch('/api/user/mercadopago', {
+          method: 'POST',
+          body: JSON.stringify({
+            email,
+            fullName,
+            selectedPlan: name,
+            planPrice: isCheckedAnualMode ? (price * (100 - discount)) / 100 : price,
+            frequency: isCheckedAnualMode ? 12 : 1,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        console.log('Resposta da API:', response);  // Verificando a resposta antes de tentar parseá-la
+    
+        // Se a resposta não for JSON válido, tente logar o conteúdo da resposta para depurar
+        const textResponse = await response.text();
+        console.log('Texto da resposta:', textResponse);
+    
+        // Se a resposta não for JSON válido, podemos retornar aqui
+        try {
+          const data = JSON.parse(textResponse);
+          console.log('Resposta JSON:', data);  // Logando a resposta JSON
+          if (!data.init_point) {
+            throw new Error('Link de pagamento não retornado.');
+          }
+    
+          // Redirecionando para o Mercado Pago
+          window.location.href = data.init_point;
+        } catch (error) {
+          console.error('Erro ao processar a resposta JSON:', error.message);
+        }
+      } catch (error) {
+        console.error('Erro ao processar pagamento:', error.message);
+      }
+    };
+    
 
   return (
     <div className="c select-none flex flex-col items-center border border-ternary w-[235px] text-center bg-secondary m-2 rounded-2xl min-h-[500px] h-auto pb-10">
