@@ -1,4 +1,4 @@
-import mercadopago from 'mercadopago';
+import mercadopago from '../../../utils/mercadopago';
 import { getSession } from 'next-auth/react';
 
 // Configuração do Mercado Pago com o access_token
@@ -26,6 +26,7 @@ async function createSubscriptionPreference(email, name, planName, planPrice, fr
         success: 'http://localhost:3000/success',
         failure: 'http://localhost:3000/failure',
         pending: 'http://localhost:3000/pending',
+        confirmacao: 'http://localhost:3000/confirmacao',
       },
       auto_return: 'approved',
       notification_url: 'http://www.your-site.com/webhooks', // Alterar para o seu webhook real

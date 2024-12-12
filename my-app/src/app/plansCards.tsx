@@ -55,6 +55,11 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
         },
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erro ao processar pagamento');
+      }
+
       const data = await response.json();
       if (!data.init_point) {
         throw new Error('Link de pagamento não retornado.');
@@ -63,6 +68,7 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
       window.location.href = data.init_point;
     } catch (error) {
       console.error('Erro ao processar pagamento:', error.message);
+      alert(`Erro ao processar pagamento: ${error.message}`);
     }
   };
 

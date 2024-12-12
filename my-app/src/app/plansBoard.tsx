@@ -1,12 +1,33 @@
-"use client"
+'use client'
 import React, { useState } from 'react';
 import PlanPriceCard from './plansCards';
+import axios from 'axios';
 
 const PlansPriceBoard: React.FC = () => {
     const [checked, setChecked] = useState<boolean>(false);
 
     const handleToggle = () => {
         setChecked(!checked);
+    };
+
+    const handleSubscribe = async (planName: string) => {
+        const planType = checked ? 'annual' : 'monthly';
+        const email = 'user@example.com'; // Substitua pelo email do usuário logado
+        const cardToken = 'CARD_TOKEN'; // Substitua pelo token do cartão do usuário
+
+        try {
+            const response = await axios.post('/api/auth/subscriptions/create-preapproval', {
+                email,
+                planType,
+                planName,
+                cardToken,
+            });
+
+            const { init_point } = response.data;
+            window.location.href = init_point;
+        } catch (error) {
+            console.error('Erro ao processar pagamento:', error.response ? error.response.data : error.message);
+        }
     };
 
     return (
@@ -22,7 +43,6 @@ const PlansPriceBoard: React.FC = () => {
                     <div className='flex items-center'>
                         <span className={`font-bold transition-colors ${!checked ? 'text-white' : 'text-black'}`}>Anual</span>
                         <div className='font-bold ml-2 text-[12px] bg-green-600 rounded-sm p-[1.5px] text-white'>
-                            {/* necessário implementar para pegar as promoções do banco de dados */}
                             25% off
                         </div>
                     </div>
@@ -40,6 +60,7 @@ const PlansPriceBoard: React.FC = () => {
                         price={0}
                         discount={0}
                         benefits='Período de Teste;Criação de 1 anúncio;'
+                        onSubscribe={() => handleSubscribe('free')}
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}
@@ -47,13 +68,15 @@ const PlansPriceBoard: React.FC = () => {
                         price={490.00}
                         discount={25.00}
                         benefits='Cadastro de Produtos; Criação de Categorias; Multi Integrações;'
+                        onSubscribe={() => handleSubscribe('bronze')}
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}
                         name='Prata'
                         price={900.00}
                         discount={25.00}
-                        benefits=' Cadastro de Produtos; Criação de Categorias; Multi Integrações;Sugestões de Imagens; Suporte Ticket'
+                        benefits='Cadastro de Produtos; Criação de Categorias; Multi Integrações;Sugestões de Imagens; Suporte Ticket'
+                        onSubscribe={() => handleSubscribe('prata')}
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}
@@ -61,6 +84,7 @@ const PlansPriceBoard: React.FC = () => {
                         price={1590.00}
                         discount={25.00}
                         benefits='Cadastro de Produtos; Criação de Categorias; Multi Integrações;Sugestões de Imagens; Editor de imagens; Suporte Whatsapp;'
+                        onSubscribe={() => handleSubscribe('ouro')}
                     />
                 </div>
             </center>
