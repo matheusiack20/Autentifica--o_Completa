@@ -1,4 +1,5 @@
-import PlanPriceCard from '../components/PlanPriceCard';
+import PlanPriceCard from '../../src/app/plansCards';
+
 
 const Subscriptions = () => {
     return (

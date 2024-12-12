@@ -52,3 +52,5 @@ export const connectOnce = async () => {
     setTimeout(connectOnce, 5000);
   });
 };
+
+export default connectOnce;

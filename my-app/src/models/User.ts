@@ -21,7 +21,17 @@ interface IUserModel extends Model<IUser> {
 // Definição do Schema do User
 const userSchema = new Schema<IUser>(
   {
-    email: { type: String, required: true, unique: true },
+    email: { 
+      type: String, 
+      required: true, 
+      unique: true, 
+      validate: {
+        validator: function (v: string) {
+          return /\S+@\S+\.\S+/.test(v); // Validação simples para o formato de email
+        },
+        message: props => `${props.value} não é um email válido!`
+      }
+    },
     password: { type: String, required: true },
     name: { type: String, required: true },
     role: { type: String, default: "user" },
@@ -47,15 +57,29 @@ userSchema.statics.findUserWithPassword = async function (
   email: string,
   password: string
 ): Promise<IUser | null> {
-  const user = await this.findOne({ email });
+  try {
+    const user = await this.findOne({ email });
 
-  if (!user) return null;
+    if (!user) return null;
 
-  const isValid = await argon2.verify(user.password, password.trim()); // Verifica se a senha fornecida é válida
-  if (!isValid) return null;
+    const isValid = await argon2.verify(user.password, password.trim()); // Verifica se a senha fornecida é válida
+    if (!isValid) return null;
 
-  return user;
+    return user;
+  } catch (error) {
+    console.error("Erro ao encontrar usuário com a senha:", error);
+    return null; // Ou lançar erro dependendo da sua estratégia de tratamento de erro
+  }
 };
+
+// Hook para hashear a senha antes de salvar o usuário
+userSchema.pre('save', async function(next) {
+  const user = this as IUser;
+  if (user.isModified('password')) {
+    user.password = await argon2.hash(user.password); // Hash da senha antes de salvar
+  }
+  next();
+});
 
 // Verifica se o modelo já está registrado para evitar sobrescrever
 const User = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>("User", userSchema);
