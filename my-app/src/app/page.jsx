@@ -120,15 +120,13 @@ export default function Home() {
       <br />
 
       {/* Seção de Planos */}
-      <section>
+      <section className="w-full iphone:h-[100dvh] h-[100dvh]">
         <h2 id="titlecon" ref={planSectionRef}>
           Escolha o melhor plano para você
         </h2>
         <br />
         <PlansPriceBoard />
-
-
-      <br />
+        <br />
       </section>
     </main>
   );
