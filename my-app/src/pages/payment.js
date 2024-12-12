@@ -1,117 +1,99 @@
+// Frontend: Formulário de Pagamento
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import Script from 'next/script';
 
 export default function PaymentForm() {
-  const { data: session } = useSession();
-  const [paymentData, setPaymentData] = useState(null);
+  const [cardToken, setCardToken] = useState(null);
 
   useEffect(() => {
-    // Carregar o SDK do Mercado Pago
-    window.MercadoPago.setPublishableKey('YOUR_PUBLIC_KEY');  // Substitua pela sua chave pública
+    const script = document.createElement('script');
+    script.src = 'https://sdk.mercadopago.com/js/v2';
+    script.async = true;
+    script.onload = () => {
+      const mp = new window.MercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY, {
+        locale: 'pt-BR',
+      });
+      window.mp = mp;
+    };
+    document.body.appendChild(script);
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    // Coleta os dados do formulário
-    const cardForm = window.MercadoPago.cardForm({
-      amount: '100.0', // Valor da assinatura
-      autoFill: true,
-      form: {
-        id: 'paymentForm', // O ID do seu formulário HTML
-        cardholderName: {
-          id: 'cardholderName',
-        },
-        cardNumber: {
-          id: 'cardNumber',
-        },
-        cardExpirationMonth: {
-          id: 'cardExpirationMonth',
-        },
-        cardExpirationYear: {
-          id: 'cardExpirationYear',
-        },
-        securityCode: {
-          id: 'securityCode',
-        },
-        documentNumber: {
-          id: 'documentNumber',
-        },
-        issuer: {
-          id: 'issuer',
-        },
-        installments: {
-          id: 'installments',
-        },
-      },
-    });
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    const cardData = {
+      cardNumber: e.target.cardNumber.value,
+      cardholderName: e.target.cardholderName.value,
+      cardExpirationMonth: e.target.cardExpirationMonth.value,
+      cardExpirationYear: e.target.cardExpirationYear.value,
+      securityCode: e.target.securityCode.value,
+      identificationType: 'CPF',
+      identificationNumber: e.target.identificationNumber.value,
+    };
 
     try {
-      // Cria o token do cartão
-      const { token } = await cardForm.createToken();
+      const mp = window.mp;
+      const cardTokenResponse = await mp.createCardToken(cardData);
+      setCardToken(cardTokenResponse.id);
+    } catch (error) {
+      console.error('Erro ao criar card token:', error);
+    }
+  };
 
-      // Envia o token para o backend para criar a assinatura
+  const handleSubscription = async () => {
+    try {
       const response = await fetch('/api/user/mercadopago', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          token: token,
-          email: session.user.email,
-          planName: 'Plano Teste',
-          planPrice: 100.0,
-          frequency: 1, // Mensal
+          token: cardToken,
+          email: 'test@example.com',
+          name: 'User Name',
+          selectedPlan: 'Plano Mensal',
+          planPrice: 100,
+          frequency: 1,
         }),
       });
 
       const data = await response.json();
-
       if (data.init_point) {
-        // Redireciona para a página de pagamento
         window.location.href = data.init_point;
+      } else {
+        console.error('Erro na criação da assinatura:', data.error);
       }
     } catch (error) {
-      console.error('Erro ao gerar o token do cartão:', error);
+      console.error('Erro ao processar assinatura:', error);
     }
   };
 
   return (
-    <>
-      <Script src="https://sdk.mercadopago.com/js/v2"></Script>
-      
-      <form id="paymentForm" onSubmit={handleSubmit}>
+    <form onSubmit={handlePayment}>
+      <div>
+        <label>Número do Cartão</label>
+        <input type="text" name="cardNumber" required />
+      </div>
+      <div>
+        <label>Nome no Cartão</label>
+        <input type="text" name="cardholderName" required />
+      </div>
+      <div>
+        <label>Validade (MM/AA)</label>
+        <input type="text" name="cardExpirationMonth" placeholder="MM" required />
+        <input type="text" name="cardExpirationYear" placeholder="AA" required />
+      </div>
+      <div>
+        <label>Código de Segurança (CVV)</label>
+        <input type="text" name="securityCode" required />
+      </div>
+      <div>
+        <label>CPF</label>
+        <input type="text" name="identificationNumber" required />
+      </div>
+      <button type="submit">Gerar Token</button>
+      {cardToken && (
         <div>
-          <label htmlFor="cardholderName">Nome do titular do cartão</label>
-          <input type="text" id="cardholderName" required />
+          <p>Token Gerado: {cardToken}</p>
+          <button type="button" onClick={handleSubscription}>Criar Assinatura</button>
         </div>
-        <div>
-          <label htmlFor="cardNumber">Número do cartão</label>
-          <input type="text" id="cardNumber" required />
-        </div>
-        <div>
-          <label htmlFor="cardExpirationMonth">Mês de Expiração</label>
-          <input type="text" id="cardExpirationMonth" required />
-        </div>
-        <div>
-          <label htmlFor="cardExpirationYear">Ano de Expiração</label>
-          <input type="text" id="cardExpirationYear" required />
-        </div>
-        <div>
-          <label htmlFor="securityCode">Código de segurança</label>
-          <input type="text" id="securityCode" required />
-        </div>
-        <div>
-          <label htmlFor="installments">Parcelas</label>
-          <input type="text" id="installments" required />
-        </div>
-        <div>
-          <label htmlFor="documentNumber">Número do documento</label>
-          <input type="text" id="documentNumber" required />
-        </div>
-        <button type="submit">Pagar</button>
-      </form>
-    </>
+      )}
+    </form>
   );
 }
