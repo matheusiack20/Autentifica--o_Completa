@@ -4,10 +4,10 @@ import { getSession } from 'next-auth/react';
 // Configuração do Mercado Pago com o access_token
 mercadopago.configurations.setAccessToken(process.env.MERCADO_PAGO_ACCESS_TOKEN);
 
-// Função para criar a preferência de pagamento
-async function createSubscriptionPreference(email, name, planName, planPrice, frequency) {
+// Função para criar a assinatura
+async function createSubscriptionWithToken(token, email, name, planName, planPrice, frequency) {
   try {
-    console.log('Criando preferência de pagamento para:', { email, name, planName, planPrice, frequency });
+    console.log('Criando assinatura para:', { email, name, planName, planPrice, frequency });
 
     const items = [
       {
@@ -21,6 +21,8 @@ async function createSubscriptionPreference(email, name, planName, planPrice, fr
       items,
       payer: {
         email,
+        // Adiciona o token do cartão para a cobrança
+        card_token: token,
       },
       back_urls: {
         success: 'http://localhost:3000/success',
@@ -28,9 +30,9 @@ async function createSubscriptionPreference(email, name, planName, planPrice, fr
         pending: 'http://localhost:3000/pending',
       },
       auto_return: 'approved',
-      notification_url: 'http://www.your-site.com/webhooks', // Alterar para o seu webhook real
+      notification_url: 'http://www.your-site.com/webhooks',
       recurrence: {
-        frequency, // Usando o valor de frequência passado para 1 ou 12 meses
+        frequency, // Mensal
         frequency_type: 'months',
         transaction_amount: planPrice,
         end_date: '2025-12-31T23:59:59',
@@ -41,14 +43,14 @@ async function createSubscriptionPreference(email, name, planName, planPrice, fr
 
     return preference.body.init_point;
   } catch (error) {
-    console.error('Erro ao criar a preferência de pagamento:', error.message);
+    console.error('Erro ao criar a assinatura:', error.message);
     throw new Error('Erro ao criar a assinatura');
   }
 }
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { selectedPlan, planPrice, frequency } = req.body;
+    const { token, selectedPlan, planPrice, frequency, email } = req.body;
 
     const session = await getSession({ req });
 
@@ -56,12 +58,12 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Usuário não autenticado' });
     }
 
-    const { email, name } = session.user;
+    const { name } = session.user;
 
     try {
       console.log('Dados do usuário:', { email, name });
 
-      const init_point = await createSubscriptionPreference(email, name, selectedPlan, planPrice, frequency);
+      const init_point = await createSubscriptionWithToken(token, email, name, selectedPlan, planPrice, frequency);
 
       console.log('Link de pagamento gerado:', init_point);
 
