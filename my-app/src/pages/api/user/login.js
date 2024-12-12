@@ -1,36 +1,31 @@
+import User from '../../../models/User'; // Certifique-se de que o caminho está correto
 
-import dbConnect from "../../../utils/db"; // Certifique-se de conectar ao banco
-import { findUserWithPassword } from '../../../models/User';
+const loginHandler = async (req, res) => {
+  if (req.method === 'POST') {
+    const { email, password } = req.body;
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Método não permitido" });
-  }
-
-  const { email, password } = req.body;
-
-  await dbConnect(); // Conecta ao banco
-
-  try {
-    // Encontra o usuário com a senha inclusa
-    const user = await findUserWithPassword(email);
-
-    if (!user) {
-      return res.status(400).json({ message: "Email ou senha incorretos" });
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email e senha são obrigatórios' });
     }
 
-    // Compara a senha fornecida com a senha armazenada
-    const isMatch = await user.comparePassword(password);
+    try {
+      // Utilizando o método estático findUserWithPassword
+      const user = await User.findUserWithPassword(email, password);
 
-    if (!isMatch) {
-      return res.status(400).json({ message: "Email ou senha incorretos" });
+      if (!user) {
+        return res.status(401).json({ message: 'Email ou senha inválidos' });
+      }
+
+      // Se o usuário for encontrado e a senha for válida
+      return res.status(200).json({ message: 'Login bem-sucedido', user });
+
+    } catch (error) {
+      return res.status(500).json({ message: 'Erro ao processar o login', error });
     }
-
-    // Retorna o sucesso caso o usuário seja autenticado (você pode adicionar lógica JWT aqui)
-    res.status(200).json({ message: "Autenticação bem-sucedida", user: { id: user._id, email: user.email, name: user.name } });
-
-  } catch (error) {
-    console.error("Erro na autenticação:", error);
-    res.status(500).json({ message: "Erro no servidor" });
+  } else {
+    // Retorna um erro se o método não for POST
+    res.status(405).json({ message: 'Método não permitido' });
   }
-}
+};
+
+export default loginHandler;
