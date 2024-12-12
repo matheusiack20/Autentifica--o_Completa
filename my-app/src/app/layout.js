@@ -11,7 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Autentificação",
+  title: "AnuncIA - Anúncios em um clique",
   icons: {
     icon: "https://media.licdn.com/dms/image/v2/C4D0BAQH0lo-u5Wpe7g/company-logo_200_200/company-logo_200_200/0/1654550785312/mapmarketplaces_logo?e=2147483647&v=beta&t=uc-BPtacGsO7DjuAtE9pxFPcCuhjCPgGn2MhPkfoDFs",
   },

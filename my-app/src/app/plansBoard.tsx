@@ -39,28 +39,28 @@ const PlansPriceBoard: React.FC = () => {
                         name='Free'
                         price={0}
                         discount={0}
-                        benefits='1 anúncio; Período de Teste'
+                        benefits='Período de Teste;Criação de 1 anúncio;'
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}
                         name='Bronze'
                         price={490.00}
                         discount={25.00}
-                        benefits='Cadastro de Produtos; Enriquecimento de Produtos; Criando Categorias; Sugestão de Imagens; Multi Integrações;'
+                        benefits='Cadastro de Produtos; Criação de Categorias; Multi Integrações;'
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}
                         name='Prata'
                         price={900.00}
                         discount={25.00}
-                        benefits='Tudo do plano Ouro; Cadastro de Produtos; Enriquecimento de Produtos; Criando Categorias; Sugestão de Imagens; Multi Integrações; Suporte Map;'
+                        benefits=' Cadastro de Produtos; Criação de Categorias; Multi Integrações;Sugestões de Imagens; Suporte Ticket'
                     />
                     <PlanPriceCard
                         isCheckedAnualMode={checked}
                         name='Ouro'
                         price={1590.00}
                         discount={25.00}
-                        benefits='Tudo do plano Prata; Suporte WhatsApp; Sem Limite de Requisições;'
+                        benefits='Cadastro de Produtos; Criação de Categorias; Multi Integrações;Sugestões de Imagens; Editor de imagens; Suporte Whatsapp;'
                     />
                 </div>
             </center>

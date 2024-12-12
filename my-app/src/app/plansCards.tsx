@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';  // Usando NextAuth.js para gerenciamento de sessão
+import { FaCheck } from 'react-icons/fa'; // Importing check icon from react-icons
 
 interface PlanPriceProps {
   isCheckedAnualMode: boolean;
@@ -7,6 +8,7 @@ interface PlanPriceProps {
   price: number;
   discount: number;
   benefits: string;
+  onSubscribe: () => void;
 }
 
 const PlanPriceCard: React.FC<PlanPriceProps> = ({
@@ -15,6 +17,7 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
   price,
   discount,
   benefits,
+  onSubscribe,
 }) => {
   const { data: session } = useSession();  // Obtendo a sessão do usuário logado
   const [email, setEmail] = useState<string | null>(null);
@@ -32,55 +35,39 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
     .split(';')
     .filter((benefit) => benefit.trim() !== '');
 
-    const handleBuyNow = async () => {
-      if (!email || !fullName) {
-        alert('Por favor, faça login para realizar a compra.');
-        return;
+  const handleBuyNow = async () => {
+    if (!email || !fullName) {
+      alert('Por favor, faça login para realizar a compra.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/subscriptions/create-preapproval', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          planType: isCheckedAnualMode ? 'annual' : 'monthly',
+          planName: name.toLowerCase(),
+          cardToken: 'YOUR_CARD_TOKEN', // Substitua pelo token do cartão
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      if (!data.init_point) {
+        throw new Error('Link de pagamento não retornado.');
       }
-    
-      try {
-        // Enviar dados para a API que cria a preferência de pagamento
-        const response = await fetch('/api/user/mercadopago', {
-          method: 'POST',
-          body: JSON.stringify({
-            email,
-            fullName,
-            selectedPlan: name,
-            planPrice: isCheckedAnualMode ? (price * (100 - discount)) / 100 : price,
-            frequency: isCheckedAnualMode ? 12 : 1,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-    
-        console.log('Resposta da API:', response);  // Verificando a resposta antes de tentar parseá-la
-    
-        // Se a resposta não for JSON válido, tente logar o conteúdo da resposta para depurar
-        const textResponse = await response.text();
-        console.log('Texto da resposta:', textResponse);
-    
-        // Se a resposta não for JSON válido, podemos retornar aqui
-        try {
-          const data = JSON.parse(textResponse);
-          console.log('Resposta JSON:', data);  // Logando a resposta JSON
-          if (!data.init_point) {
-            throw new Error('Link de pagamento não retornado.');
-          }
-    
-          // Redirecionando para o Mercado Pago
-          window.location.href = data.init_point;
-        } catch (error) {
-          console.error('Erro ao processar a resposta JSON:', error.message);
-        }
-      } catch (error) {
-        console.error('Erro ao processar pagamento:', error.message);
-      }
-    };
-    
+
+      window.location.href = data.init_point;
+    } catch (error) {
+      console.error('Erro ao processar pagamento:', error.message);
+    }
+  };
 
   return (
-    <div className="c select-none flex flex-col items-center border border-ternary w-[235px] text-center bg-secondary m-2 rounded-2xl min-h-[500px] h-auto pb-10">
+    <div className="c select-none flex flex-col items-center border border-ternary w-[300px] text-center bg-secondary m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg hover:shadow-ternary transition-shadow duration-300"> {/* Added shadow effect around */}
       <div
         id="plan_name"
         className="text-center m-4 bg-ternary w-auto min-w-[130px] px-4 py-1 rounded-3xl"
@@ -117,23 +104,24 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
           R${' '}
           {(isCheckedAnualMode ? (price * (100 - discount)) / 100 : price)
             .toFixed(2)
-            .replace('.', ',')}
+            .replace('.', ',')} <span className="text-[14px] text-ternary">/mês</span>
         </span>
       </div>
       <button
         id="button_buy_plan"
-        className="text-[22px] text-black bg-ternary font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white"
+        className="text-[22px] text-black bg-ternary font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95" // Added hover:scale-95 for shrink effect
         onClick={handleBuyNow}
       >
         Assinar Agora
       </button>
-      <div className="my-5 w-[170px] h-2 border-b border-white" />
+      <div className="my-5 w-[170px] h-2 border-b border-ternary" />
       <div id="benefits_list" className="w-[180px]">
         {benefitsList.map((benefit, index) => (
           <div
             key={index}
-            className="text-white flex items-center mb-1 text-[12px] lowercase"
+            className="text-white flex items-center mb-2 text-[14px] whitespace-nowrap"
           >
+            <FaCheck className="mr-2" style={{ color: '#DAFD00' }} /> {/* Adding check icon with color */}
             <span>{benefit.trim()}</span>
           </div>
         ))}
