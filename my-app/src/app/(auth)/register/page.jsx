@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import imglogo from '/public/LogoMAP.png';
 import eyeOpen from '/public/icons/olhoaberto.png'; // Caminho do ícone de mostrar senha
 import eyeClosed from '/public/icons/olhofechado.png'; // Caminho do ícone de ocultar senha
-
+import React from 'react';
 
 const InputField = ({
   label,

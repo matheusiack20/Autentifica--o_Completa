@@ -37,3 +37,5 @@ export const POST = async (req, res) => {
     return new Response(JSON.stringify({ message: 'Erro ao registrar usuário.' }), { status: 500 });
   }
 };
+
+// const { res } = context;

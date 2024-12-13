@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function ResetPassword() {
-  const router = typeof window !== "undefined" ? useRouter() : null;
+  const router = useRouter();
   const [token, setToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

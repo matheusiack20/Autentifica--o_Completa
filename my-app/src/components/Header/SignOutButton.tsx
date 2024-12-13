@@ -13,7 +13,7 @@ const SignOutButton = () => {
     };
 
     return (
-        <Button text="Sair" onClick={handleSignOut} />
+        <Button text="Sair" onClick={handleSignOut} className="your-class-name" />
     );
 };
 

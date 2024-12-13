@@ -12,11 +12,12 @@ import { FcGoogle } from 'react-icons/fc'; // Ícone do Google
 import imglogo from '/public/LogoMAP.png'; // Caminho da imagem do logo
 import eyeIcon from '/public/icons/olhofechado.png'; // Ícone para mostrar senha
 import eyeClosed from '/public/icons/olhoaberto.png'; // Ícone para ocultar senha
+import React from 'react';
 
-export default function Login() {
+const LoginPage = () => {
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [error, setError] = useState('');
-  const { status } = useSession();
   const [isClient, setIsClient] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // Estado para alternar exibição da senha
 
@@ -26,6 +27,14 @@ export default function Login() {
       router.push('/'); // Redireciona se o usuário já está autenticado
     }
   }, [status, router]);
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (session) {
+    return <p>Welcome, {session.user.name}</p>;
+  }
 
   if (!isClient || status === 'loading') {
     return <div>Carregando...</div>;
@@ -101,26 +110,25 @@ export default function Login() {
             </h2>
 
             <div className="flex justify-center gap-4 mb-4">
-            <button
-  type="button"
-  onClick={() => handleSocialLogin('facebook')}
-  className="flex items-center justify-center bg-black text-white w-1/2 py-2 rounded-full hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
-  aria-label="Login com Facebook"
->
-  <FaFacebook className="mr-2 text-xl sm:text-2xl md:text-3xl" /> {/* Ajuste responsivo */}
-  Facebook
-</button>
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('facebook')}
+                className="flex items-center justify-center bg-black text-white w-1/2 py-2 rounded-full hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
+                aria-label="Login com Facebook"
+              >
+                <FaFacebook className="mr-2 text-xl sm:text-2xl md:text-3xl" /> {/* Ajuste responsivo */}
+                Facebook
+              </button>
 
-<button
-  type="button"
-  onClick={() => handleSocialLogin('google')}
-  className="flex items-center justify-center bg-black text-white w-1/2 py-2 rounded-full hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
-  aria-label="Login com Google"
->
-  <FcGoogle className="mr-2 text-xl sm:text-2xl md:text-3xl" /> {/* Ajuste responsivo */}
-  Google
-</button>
-
+              <button
+                type="button"
+                onClick={() => handleSocialLogin('google')}
+                className="flex items-center justify-center bg-black text-white w-1/2 py-2 rounded-full hover:bg-[#d4ef00] hover:text-black focus:outline-none focus:ring-2 focus:ring-[#d4ef00]"
+                aria-label="Login com Google"
+              >
+                <FcGoogle className="mr-2 text-xl sm:text-2xl md:text-3xl" /> {/* Ajuste responsivo */}
+                Google
+              </button>
             </div>
 
             <div className="flex flex-col">
@@ -213,4 +221,6 @@ export default function Login() {
       </Formik>
     </main>
   );
-}
+};
+
+export default LoginPage;
