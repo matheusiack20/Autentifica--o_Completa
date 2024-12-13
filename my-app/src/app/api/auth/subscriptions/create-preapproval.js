@@ -1,5 +1,7 @@
 import mercadopago from '../../../utils/mercadopago';
 
+const MERCADO_PAGO_ACCESS_TOKEN = process.env.MERCADO_PAGO_ACCESS_TOKEN;
+
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { email, planType, planName, cardToken } = req.body;

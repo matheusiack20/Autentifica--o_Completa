@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
@@ -7,6 +7,17 @@ import User from "../../../../models/User"; // Modelo User
 import argon2 from "argon2";
 
 const genericAvatar = "/Generic_avatar.png"; // Avatar padrão
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role?: string | null;
+    };
+  }
+}
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -26,6 +37,9 @@ const authOptions: NextAuthOptions = {
           await connectOnce();
 
           // Busca o usuário e verifica a senha
+          if (!credentials) {
+            throw new Error("Credenciais não fornecidas.");
+          }
           const user = await User.findUserWithPassword(
             credentials.email,
             credentials.password
@@ -37,7 +51,7 @@ const authOptions: NextAuthOptions = {
 
           // Retorna as informações do usuário autenticado
           return {
-            id: user._id.toString(),
+            id: (user._id as string).toString(),
             name: user.name,
             email: user.email,
             role: user.role,
@@ -73,7 +87,7 @@ const authOptions: NextAuthOptions = {
           }
 
           return {
-            id: user._id.toString(),
+            id: (user._id as string).toString(),
             name: user.name,
             email: user.email,
             role: user.role,
@@ -109,7 +123,7 @@ const authOptions: NextAuthOptions = {
           }
 
           return {
-            id: user._id.toString(),
+            id: (user._id as string).toString(),
             name: user.name,
             email: user.email,
             role: user.role,
@@ -129,7 +143,7 @@ const authOptions: NextAuthOptions = {
      */
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role || "user";
+        token.role = (user as any).role || "user";
         token.picture = user.image || genericAvatar;
         token.email = user.email;
         token.name = user.name;
@@ -142,7 +156,7 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.user = {
         ...session.user,
-        role: token.role,
+        role: token.role as string | null | undefined,
         image: token.picture,
         email: token.email,
         name: token.name,
@@ -178,3 +192,5 @@ const authOptions: NextAuthOptions = {
  */
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
+
+const someVariable: any = 'value'; // Replace 'any' with a specific type
