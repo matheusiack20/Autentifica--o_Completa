@@ -1,7 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import './globals.css';
 import './style.css';
@@ -14,58 +12,11 @@ import imageminteligenciaesq from '../../public/Inteligenciaartificialfoto1.png'
 import Anuncia from '../../public/anuncIAlogo[1].png';
 
 export default function Home() {
-  const [planType, setPlanType] = useState('anual');
-  const [loading, setLoading] = useState(false);
   const planSectionRef = useRef(null);
-  const router = useRouter();
-  const { data: session } = useSession();
-
-  // Define o valor para os planos
-  const planPrices = {
-    mensal: {
-      Olist: 19000, // R$ 190,00
-      Bling: 19000, // R$ 190,00
-    },
-    anual: {
-      Olist: 190000, // R$ 1.900,00
-      Bling: 190000, // R$ 1.900,00
-    },
-  };
-
-  const handlePlanTypeChange = (selectedPlanType) => setPlanType(selectedPlanType);
 
   const scrollToPlans = () => {
     if (planSectionRef.current) {
       planSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const handleSubscriptionClick = async (planType, planName) => {
-    const amount = planPrices[planType][planName];
-    const title = `${planName} - Assinatura ${planType.charAt(0).toUpperCase() + planType.slice(1)}`;
-    const email = session?.user?.email || 'usuario@exemplo.com';
-
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/user/mercadopago', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, amount, email, planType }),
-      });
-
-      if (!response.ok) throw new Error('Erro ao processar a assinatura.');
-
-      const data = await response.json();
-      if (data.init_point) {
-        window.location.href = data.init_point; // Redireciona para o link do Mercado Pago
-      } else {
-        throw new Error('Erro ao gerar o link de pagamento.');
-      }
-    } catch (error) {
-      console.error(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 

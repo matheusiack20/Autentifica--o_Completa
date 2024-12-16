@@ -9,7 +9,7 @@ export default function Confirmacao() {
         const resposta = await fetch('/api/confirmacao');
         const dados = await resposta.json();
         setMensagem(`Resposta recebida: ${JSON.stringify(dados)}`);
-      } catch (erro) {
+      } catch {
         setMensagem('Erro ao buscar dados.');
       }
     }
