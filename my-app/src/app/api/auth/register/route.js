@@ -4,7 +4,7 @@ import argon2 from 'argon2';
 import User from '../../../../models/User'; // Verifique o caminho
 import { connectOnce } from '../../../../utils/db'; // Verifique o caminho
 
-export const POST = async (req, res) => {
+export const POST = async (req) => {
   try {
     const { name, email, password } = await req.json();
 
@@ -37,5 +37,3 @@ export const POST = async (req, res) => {
     return new Response(JSON.stringify({ message: 'Erro ao registrar usuário.' }), { status: 500 });
   }
 };
-
-// const { res } = context;

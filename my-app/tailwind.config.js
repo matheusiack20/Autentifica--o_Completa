@@ -31,6 +31,7 @@ const config = {
         ternary: "#DAFD00",
         olistcolor: "#0a4ee4",
         blingcolor: "#5ac782",
+        marc: "#666666",
       },
     },
   },

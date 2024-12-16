@@ -30,7 +30,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/app/api/auth/[...nextauth]/route.js",
+    "src/app/api/auth/[...nextauth]/route.ts",
     "src/components/Header/Header.jsx"
   ],
   "exclude": [

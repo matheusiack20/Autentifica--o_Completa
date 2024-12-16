@@ -22,7 +22,7 @@ export default function Contato() {
     e.preventDefault();
 
     try {
-      const data = await sendContactForm(formData);
+      await sendContactForm(formData);
       setFormStatus({ type: "success", message: "Mensagem enviada com sucesso!" });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {

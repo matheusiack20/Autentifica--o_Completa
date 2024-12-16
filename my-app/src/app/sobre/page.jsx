@@ -1,16 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import PlansPriceBoard from "../plansBoard"
 
 const Planos = () => {
-  const [planType, setPlanType] = useState('anual');
+  const [planType] = useState('anual');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  const handlePlanTypeChange = (type) => {
-    setPlanType(type);
-  };
 
   const plans = {
     anual: [
