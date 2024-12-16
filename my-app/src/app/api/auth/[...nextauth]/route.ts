@@ -1,5 +1,7 @@
 import NextAuth, { AuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
 import { connectOnce } from "../../../../utils/db";
 import User from "../../../../models/User";
 
@@ -68,6 +70,14 @@ const authOptions: AuthOptions = {
           throw new Error("Erro durante a autorização. Por favor, tente novamente.");
         }
       },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     }),
   ],
   callbacks: {
