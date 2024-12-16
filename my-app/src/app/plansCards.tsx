@@ -1,90 +1,46 @@
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';  // Usando NextAuth.js para gerenciamento de sessão
-import { FaCheck } from 'react-icons/fa'; // Importing check icon from react-icons
+import React from 'react';
+import { FaCheck } from 'react-icons/fa';
 
-interface PlanPriceProps {
+interface PlanPriceCardProps {
   isCheckedAnualMode: boolean;
   name: string;
   price: number;
   discount: number;
   benefits: string;
+  borderColor: string;
+  bgColor: string;
+  titleBgColor: string; // Cor de fundo do título
   onSubscribe: () => void;
+  buttonColor?: string; // Opcional
+  iconColor?: string; // Opcional
 }
 
-const PlanPriceCard: React.FC<PlanPriceProps> = ({
+
+const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   isCheckedAnualMode,
   name,
   price,
   discount,
   benefits,
+  borderColor,
+  bgColor,
+  onSubscribe,
+  buttonColor = 'bg-ternary',
+  iconColor = '#DAFD00',
+  titleBgColor, // Recebe a cor de fundo personalizada
 }) => {
-  const { data: session } = useSession();  // Obtendo a sessão do usuário logado
-  const [email, setEmail] = useState<string | null>(null);
-  const [fullName, setFullName] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (session) {
-      console.log('Sessão do usuário:', session);  // Logando a sessão
-      setEmail(session.user?.email || null);
-      setFullName(session.user?.name || null);
-    }
-  }, [session]);
-
-  const benefitsList = benefits
-    .split(';')
-    .filter((benefit) => benefit.trim() !== '');
-
-  const handleBuyNow = async () => {
-    if (!email || !fullName) {
-      alert('Por favor, faça login para realizar a compra.');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/auth/subscriptions/create-preapproval', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          planType: isCheckedAnualMode ? 'annual' : 'monthly',
-          planName: name.toLowerCase(),
-          cardToken: 'YOUR_CARD_TOKEN', // Substitua pelo token do cartão
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-      if (!data.init_point) {
-        throw new Error('Link de pagamento não retornado.');
-      }
-
-      window.location.href = data.init_point;
-    } catch (error) {
-      console.error('Erro ao processar pagamento:', error.message);
-    }
-  };
-
   return (
-    <div className="c select-none flex flex-col items-center border border-ternary w-[300px] text-center bg-secondary m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg hover:shadow-ternary transition-shadow duration-300"> {/* Added shadow effect around */}
+    <div
+      className={`select-none flex flex-col items-center border ${borderColor} w-[300px] text-center ${bgColor} m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg hover:shadow-ternary transition-shadow duration-300`}
+    >
+      {/* Nome do Plano com fundo personalizado */}
       <div
         id="plan_name"
-        className="text-center m-4 bg-ternary w-auto min-w-[130px] px-4 py-1 rounded-3xl"
+        className={`inline-block m-4 min-w-[130px] px-4 py-1 rounded-full ${titleBgColor}`}
       >
-        <h1 className="text-[20px] font-extrabold text-shadow text-black shadowhad">
-          <span
-            className={
-              name === 'Olist'
-                ? 'text-olistcolor'
-                : name === 'Bling'
-                  ? 'text-blingcolor'
-                  : ''
-            }
-          >
-            {name}
-          </span>
-        </h1>
+        <h1 className="text-[20px] font-extrabold text-black">{name}</h1>
       </div>
+
       {isCheckedAnualMode && (
         <div
           id="tag_discount"
@@ -93,6 +49,7 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
           <span>{discount}% off</span>
         </div>
       )}
+
       <div id="pricing" className="mt-5 mb-3 flex flex-col">
         {isCheckedAnualMode && (
           <span className="line-through text-[#929292] font-extrabold text-[20px]">
@@ -103,24 +60,27 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
           R${' '}
           {(isCheckedAnualMode ? (price * (100 - discount)) / 100 : price)
             .toFixed(2)
-            .replace('.', ',')} <span className="text-[14px] text-ternary">/mês</span>
+            .replace('.', ',')}{' '}
+          <span className="text-[14px] text-white">/mês</span>
         </span>
       </div>
+
       <button
         id="button_buy_plan"
-        className="text-[22px] text-black bg-ternary font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95" // Added hover:scale-95 for shrink effect
-        onClick={handleBuyNow}
+        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95`}
+        onClick={onSubscribe}
       >
         Assinar Agora
       </button>
-      <div className="my-5 w-[170px] h-2 border-b border-ternary" />
+
+      <div className="my-5 w-[200px] h-2 border-b border-white" />
       <div id="benefits_list" className="w-[180px]">
-        {benefitsList.map((benefit, index) => (
+        {benefits.split(';').map((benefit, index) => (
           <div
             key={index}
             className="text-white flex items-center mb-2 text-[14px] whitespace-nowrap"
           >
-            <FaCheck className="mr-2" style={{ color: '#DAFD00' }} /> {/* Adding check icon with color */}
+            <FaCheck className="mr-2" style={{ color: iconColor }} />
             <span>{benefit.trim()}</span>
           </div>
         ))}
