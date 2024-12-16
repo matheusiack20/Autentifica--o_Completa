@@ -1,102 +1,47 @@
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react'; // Usando NextAuth.js para gerenciamento de sessão
-import { FaCheck } from 'react-icons/fa'; // Importando ícone de check
+import React from 'react';
+import { FaCheck } from 'react-icons/fa';
 
-interface PlanPriceProps {
+interface PlanPriceCardProps {
   isCheckedAnualMode: boolean;
   name: string;
   price: number;
   discount: number;
   benefits: string;
+  borderColor: string;
+  bgColor: string;
+  titleColor: string;
   onSubscribe: () => void;
-  borderColor?: string; // Nova propriedade para borda e sombra dinâmica
+  buttonColor?: string;
+  iconColor?: string;
+  titleBgColor: string; // Cor de fundo do título personalizada
 }
 
-const PlanPriceCard: React.FC<PlanPriceProps> = ({
+const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   isCheckedAnualMode,
   name,
   price,
   discount,
   benefits,
+  borderColor,
+  bgColor,
+  titleColor,
   onSubscribe,
-  borderColor = 'border-ternary', // Classe padrão para a borda
+  buttonColor = 'bg-ternary',
+  iconColor = '#DAFD00',
+  titleBgColor, // Recebe a cor de fundo personalizada
 }) => {
-  const { data: session } = useSession(); // Obtendo a sessão do usuário logado
-  const [email, setEmail] = useState<string | null>(null);
-  const [fullName, setFullName] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (session) {
-      setEmail(session.user?.email || null);
-      setFullName(session.user?.name || null);
-    }
-  }, [session]);
-
-  const benefitsList = benefits
-    .split(';')
-    .filter((benefit) => benefit.trim() !== '');
-
-  const handleBuyNow = async () => {
-    if (!email || !fullName) {
-      alert('Por favor, faça login para realizar a compra.');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/auth/subscriptions/create-preapproval', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          planType: isCheckedAnualMode ? 'annual' : 'monthly',
-          planName: name.toLowerCase(),
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erro ao processar pagamento.');
-      }
-
-      const data = await response.json();
-      if (!data.init_point) {
-        throw new Error('Link de pagamento não retornado.');
-      }
-
-      window.location.href = data.init_point;
-    } catch (error) {
-      console.error('Erro ao processar pagamento:', error.message);
-      alert(`Erro: ${error.message}`);
-    }
-  };
-
   return (
     <div
-      className={`c select-none flex flex-col items-center ${borderColor} border w-[300px] text-center bg-secondary m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg transition-shadow duration-300`}
+      className={`select-none flex flex-col items-center border ${borderColor} w-[300px] text-center ${bgColor} m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg hover:shadow-ternary transition-shadow duration-300`}
     >
-      {/* Nome do plano */}
+      {/* Nome do Plano com fundo personalizado */}
       <div
         id="plan_name"
-        className="text-center m-4 bg-ternary w-auto min-w-[130px] px-4 py-1 rounded-3xl"
+        className={`inline-block m-4 min-w-[130px] px-4 py-1 rounded-full ${titleBgColor}`}
       >
-        <h1 className="text-[20px] font-extrabold text-shadow text-black shadowhad">
-          <span
-            className={
-              name === 'Olist'
-                ? 'text-olistcolor'
-                : name === 'Bling'
-                ? 'text-blingcolor'
-                : ''
-            }
-          >
-            {name}
-          </span>
-        </h1>
+        <h1 className="text-[20px] font-extrabold text-black">{name}</h1>
       </div>
 
-      {/* Desconto */}
       {isCheckedAnualMode && (
         <div
           id="tag_discount"
@@ -106,7 +51,6 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
         </div>
       )}
 
-      {/* Preço */}
       <div id="pricing" className="mt-5 mb-3 flex flex-col">
         {isCheckedAnualMode && (
           <span className="line-through text-[#929292] font-extrabold text-[20px]">
@@ -118,30 +62,26 @@ const PlanPriceCard: React.FC<PlanPriceProps> = ({
           {(isCheckedAnualMode ? (price * (100 - discount)) / 100 : price)
             .toFixed(2)
             .replace('.', ',')}{' '}
-          <span className="text-[14px] text-ternary">/mês</span>
+          <span className="text-[14px] text-white">/mês</span>
         </span>
       </div>
 
-      {/* Botão de assinatura */}
       <button
         id="button_buy_plan"
-        className="text-[22px] text-black bg-ternary font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95"
-        onClick={handleBuyNow}
+        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95`}
+        onClick={onSubscribe}
       >
         Assinar Agora
       </button>
 
-      {/* Linha de separação */}
-      <div className="my-5 w-[170px] h-2 border-b border-ternary" />
-
-      {/* Lista de benefícios */}
+      <div className="my-5 w-[200px] h-2 border-b border-white" />
       <div id="benefits_list" className="w-[180px]">
-        {benefitsList.map((benefit, index) => (
+        {benefits.split(';').map((benefit, index) => (
           <div
             key={index}
             className="text-white flex items-center mb-2 text-[14px] whitespace-nowrap"
           >
-            <FaCheck className="mr-2" style={{ color: '#DAFD00' }} />
+            <FaCheck className="mr-2" style={{ color: iconColor }} />
             <span>{benefit.trim()}</span>
           </div>
         ))}

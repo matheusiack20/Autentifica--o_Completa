@@ -69,18 +69,16 @@ const PlansPriceBoard: React.FC = () => {
 
       <center>
         <div id="my-plans-board" className="mt-8 flex flex-wrap justify-center">
-
           <PlanPriceCard
             isCheckedAnualMode={checked}
             name="Free"
             price={0}
             discount={0}
-            benefits="Período de Teste;Criação de 1 anúncio;"
-            borderColor={
-                checked
-                  ? 'border-[#DAFD00] hover:shadow-[#DAFD00]'
-                  : 'border-[#DAFD00] hover:shadow-[#DAFD00]'
-              }
+            benefits="Período de Teste;Criação de 1 anúncio"
+            borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
+            bgColor="bg-[#00000]"
+            titleColor="text-white"
+            titleBgColor="bg-[#DAFD00]"
             onSubscribe={() => handleSubscribe('free')}
           />
 
@@ -89,12 +87,11 @@ const PlansPriceBoard: React.FC = () => {
             name="Bronze"
             price={490.0}
             discount={25.0}
-            benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações;"
-            borderColor={
-                checked
-                  ? 'border-[#DAFD00] hover:shadow-[#DAFD00]'
-                  : 'border-[#DAFD00] hover:shadow-[#DAFD00]'
-              }
+            benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações"
+            borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
+            bgColor="bg-[#00000]"
+            titleColor="text-white"
+            titleBgColor="bg-[#DAFD00]" 
             onSubscribe={() => handleSubscribe('bronze')}
           />
 
@@ -104,11 +101,11 @@ const PlansPriceBoard: React.FC = () => {
             price={900.0}
             discount={25.0}
             benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações; Sugestões de Imagens; Suporte Ticket"
-            borderColor={
-              checked
-                ? 'border-[#aaaaaa] hover:shadow-[#aaaaaa]'
-                : 'border-[#bbbbbb] hover:shadow-[#bbbbbb]'
-            }
+            borderColor="border-[#c1c1c1] hover:shadow-[#c1c1c1]"
+            bgColor="bg-[#000000]"
+            buttonColor="bg-[#c1c1c1] hover:bg-[#DAFD00] hover:shadow-md"
+            iconColor="#c1c1c1"
+            titleBgColor="bg-[#C0C0C0]"
             onSubscribe={() => handleSubscribe('prata')}
           />
 
@@ -117,12 +114,11 @@ const PlansPriceBoard: React.FC = () => {
             name="Ouro"
             price={1590.0}
             discount={25.0}
-            benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações;Sugestões de Imagens; Editor de imagens; Suporte Whatsapp;"
-            borderColor={
-                checked
-                  ? 'border-[#DAFD00] hover:shadow-[#DAFD00]'
-                  : 'border-[#DAFD00] hover:shadow-[#DAFD00]'
-              }
+            benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações; Sugestões de Imagens; Editor de imagens; Suporte Whatsapp"
+            borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
+            bgColor="bg-[#00000]"
+            titleColor="text-white"
+            titleBgColor="bg-[#DAFD00]"
             onSubscribe={() => handleSubscribe('ouro')}
           />
         </div>
