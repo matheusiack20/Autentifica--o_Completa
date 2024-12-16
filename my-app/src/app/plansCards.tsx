@@ -9,12 +9,12 @@ interface PlanPriceCardProps {
   benefits: string;
   borderColor: string;
   bgColor: string;
-  titleColor: string;
+  titleBgColor: string; // Cor de fundo do título
   onSubscribe: () => void;
-  buttonColor?: string;
-  iconColor?: string;
-  titleBgColor: string; // Cor de fundo do título personalizada
+  buttonColor?: string; // Opcional
+  iconColor?: string; // Opcional
 }
+
 
 const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   isCheckedAnualMode,
@@ -24,7 +24,6 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   benefits,
   borderColor,
   bgColor,
-  titleColor,
   onSubscribe,
   buttonColor = 'bg-ternary',
   iconColor = '#DAFD00',

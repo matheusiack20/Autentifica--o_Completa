@@ -77,7 +77,6 @@ const PlansPriceBoard: React.FC = () => {
             benefits="Período de Teste;Criação de 1 anúncio"
             borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
             bgColor="bg-[#00000]"
-            titleColor="text-white"
             titleBgColor="bg-[#DAFD00]"
             onSubscribe={() => handleSubscribe('free')}
           />
@@ -90,22 +89,21 @@ const PlansPriceBoard: React.FC = () => {
             benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações"
             borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
             bgColor="bg-[#00000]"
-            titleColor="text-white"
-            titleBgColor="bg-[#DAFD00]" 
+            titleBgColor="bg-[#DAFD00]"
             onSubscribe={() => handleSubscribe('bronze')}
           />
 
           <PlanPriceCard
             isCheckedAnualMode={checked}
             name="Prata"
-            price={900.0}
+            price={590.0}
             discount={25.0}
-            benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações; Sugestões de Imagens; Suporte Ticket"
+            benefits="Cadastro de Produtos; Criação de Categorias; Sugestões de Imagens; Suporte Ticket"
             borderColor="border-[#c1c1c1] hover:shadow-[#c1c1c1]"
             bgColor="bg-[#000000]"
             buttonColor="bg-[#c1c1c1] hover:bg-[#DAFD00] hover:shadow-md"
             iconColor="#c1c1c1"
-            titleBgColor="bg-[#C0C0C0]"
+            titleBgColor="bg-[#c1c1c1]"
             onSubscribe={() => handleSubscribe('prata')}
           />
 
@@ -117,7 +115,6 @@ const PlansPriceBoard: React.FC = () => {
             benefits="Cadastro de Produtos; Criação de Categorias; Multi Integrações; Sugestões de Imagens; Editor de imagens; Suporte Whatsapp"
             borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
             bgColor="bg-[#00000]"
-            titleColor="text-white"
             titleBgColor="bg-[#DAFD00]"
             onSubscribe={() => handleSubscribe('ouro')}
           />
