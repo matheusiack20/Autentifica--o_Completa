@@ -6,7 +6,6 @@ import './style.css';
 import './sobre/pagepublic.css';
 import './ToggleSwitch.css';
 import PlansPriceBoard from "../app/plansBoard";
-import Footer from '../components/Footer/footer';
 
 import imageminteligenciaesq from '../../public/Inteligenciaartificialfoto1.png';
 import Anuncia from '../../public/anuncIAlogo[1].png';
