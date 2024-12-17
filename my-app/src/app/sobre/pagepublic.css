@@ -2,161 +2,172 @@
 
 /* Centralizar o container principal */
 .containerpublic {
-    flex-direction: column;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin-top: 60px;
-  }
+  flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 60px;
+}
 
-  .plan-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
+.plan-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
 /* Ajuste das imagens para ocupar a largura de forma proporcional */
 .dpage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-video{
-    max-width: 80%;
-    height: auto;
-    border-radius: 8px; /* Estilização opcional */
+video {
+  max-width: 80%;
+  height: auto;
+  border-radius: 8px; /* Estilização opcional */
 }
 
-#fotopaginit{
-    max-width: 50%;
-    height: auto;
-    border-radius: 200px;
-    border: 5px solid white;
+#fotopaginit {
+  max-width: 50%;
+  height: auto;
+  border-radius: 200px;
+  border: 5px solid white;
 }
 
 /* Ajuste do texto */
 #titlecon {
-    font-family: "nasalization";
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 30px;
-    color: #DAFD00;
+  font-family: 'nasalization';
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #dafd00;
 }
 
 #subtitle {
-    justify-content: center;
-    font-size: 1.8rem;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    color: #DAFD00;
+  justify-content: center;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: #dafd00;
 }
 
 #textop {
-    font-size: 1.2rem;
-    text-align: justify;
-    max-width: 900px; /* Limita a largura do texto */
-    margin-top: 20px;
-    color: white;
+  font-size: 1.2rem;
+  text-align: justify;
+  max-width: 900px; /* Limita a largura do texto */
+  margin-top: 20px;
+  color: white;
 }
 
 @keyframes gradientButton {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 50% 100%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #saibamaispersona {
-    background: linear-gradient(90deg, #1d1d1f, #DAFD00,#1d1d1f, #DAFD00); /* cores para o degradê */
-    background-size: 400% 400%;
-    color: black;
-    font-weight: bold;
-    padding: 10px 10px;
-    border: none;
-    border-radius: 5px;
-    width: 250px;
-    cursor: pointer;
-    transition: background 0.0s ease;
-    animation: gradientButton 2s ease infinite;
-    margin-bottom: 50px;
-    margin-top: 20px;
-    font-family: "nasalization";
+  background: linear-gradient(
+    90deg,
+    #1d1d1f,
+    #dafd00,
+    #1d1d1f,
+    #dafd00
+  ); /* cores para o degradê */
+  background-size: 400% 400%;
+  color: black;
+  font-weight: bold;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  width: 250px;
+  cursor: pointer;
+  transition: background 0s ease;
+  animation: gradientButton 2s ease infinite;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  font-family: 'nasalization';
 }
 
 /* Botão com mais destaque */
 button {
-    background-color: #DAFD00;
-    color: #000;
-    border: none;
-    padding: 1px 10px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    border-radius: 5px;
+  background-color: #dafd00;
+  color: #000;
+  border: none;
+  padding: 1px 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 5px;
 }
-
-
-
 
 /* Ajuste para o footer não sobrepor o conteúdo */
 footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 20px;
+  width: 100%;
+  padding: 1rem;
+  background-color: #111; /* Ajuste conforme necessário */
+  color: #fff;
+  text-align: center;
+  position: relative; /* Mudei de 'fixed' para 'relative' */
 }
-
 
 @media (max-width: 860px) {
-    #titlecon{
-        font-size: 16px;
-        margin-bottom: 0;
+  #titlecon {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
 
-    }
-
-    #subtitle{
-        font-size: 12px;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 0px;
-        padding: 20px;
-
-    }
-    #textop{
-        font-size: 12px;
-        padding: 20px;
-        margin-top: 0;
-    }
+  #subtitle {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding: 20px;
+  }
+  #textop {
+    font-size: 12px;
+    padding: 20px;
+    margin-top: 0;
+  }
 }
-
+footer {
+  position: relative; /* Garantir que o footer não fica fixo em telas pequenas */
+}
 
 
 @media (max-width: 360px) {
-    #titlecon{
-        font-size: 16px;
-        margin-bottom: 0;
-    }
+  #titlecon {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
 
-    #subtitle{
-        font-size: 12px;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 0px;
-        padding: 20px;
-
-    }
-    #textop{
-        font-size: 12px;
-        padding: 20px;
-        margin-top: 0;
-    }
+  #subtitle {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding: 20px;
+  }
+  #textop {
+    font-size: 12px;
+    padding: 20px;
+    margin-top: 0;
+  }
 }
+footer {
+  width: 100%;
+  padding: 1rem;
+  background-color: #111; /* Ajuste conforme necessário */
+  color: #fff;
+  text-align: center;
+  position: relative; /* Mudei de 'fixed' para 'relative' */
+}
+
