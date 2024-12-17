@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import PlansPriceBoard from "../plansBoard"
+import "../style.css"
 
 const Planos = () => {
   const [planType] = useState('anual');
@@ -79,13 +80,16 @@ const Planos = () => {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto py-12">
         <div className="text-center mb-8">
-          <h1 className="text-4xl text-[#DAFD00] font-bold mb-4">
+          <h1 id='titlecon'>
             Escolha o melhor plano para você
           </h1>
 
-          <PlansPriceBoard plans={plans[planType]} onSubscribe={handleSubscribe} />
+          {/* Seção de planos com flexbox */}
+          <div className="flex justify-center gap-8">
+            <PlansPriceBoard plans={plans[planType]} onSubscribe={handleSubscribe} />
+          </div>
         </div>
 
         {loading && <div className="text-center text-xl text-gray-300">Carregando...</div>}

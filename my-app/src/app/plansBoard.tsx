@@ -99,9 +99,9 @@ const PlansPriceBoard: React.FC = () => {
             price={590.0}
             discount={25.0}
             benefits="Cadastro de Produtos; Criação de Categorias; Sugestões de Imagens; Suporte Ticket"
-            borderColor="border-[#c1c1c1] hover:shadow-[#c1c1c1]"
+            borderColor={checked ? 'border-[#c1c1c1]' : 'border-[#c1c1c1]'}
             bgColor="bg-[#000000]"
-            buttonColor="bg-[#c1c1c1] hover:bg-[#c1c1c1] hover:shadow-md"
+            buttonColor="bg-[#c1c1c1] hover:shadow-[#c1c1c1]"
             iconColor="#c1c1c1"
             titleBgColor="bg-[#c1c1c1]"
             onSubscribe={() => handleSubscribe('prata')}

@@ -5,8 +5,8 @@ import './globals.css';
 import './style.css';
 import './sobre/pagepublic.css';
 import './ToggleSwitch.css';
-import PlansPriceBoard from "../app/plansBoard"
-
+import PlansPriceBoard from "../app/plansBoard";
+import Footer from '../components/Footer/footer';
 
 import imageminteligenciaesq from '../../public/Inteligenciaartificialfoto1.png';
 import Anuncia from '../../public/anuncIAlogo[1].png';
@@ -21,7 +21,7 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <main className="flex flex-col min-h-screen">
       {/* Seção Inicial */}
       <center>
         <div className="containerhome">
@@ -71,14 +71,15 @@ export default function Home() {
       <br />
 
       {/* Seção de Planos */}
-      <section className="w-full iphone:h-[100dvh] h-[100dvh]">
-        <h2 id="titlecon" ref={planSectionRef}>
+      <div className="text-center mb-8">
+        <h2 id="titlecon" ref={planSectionRef} className="mb-4">
           Escolha o melhor plano para você
+          <br />
         </h2>
         <br />
         <PlansPriceBoard />
-        <br />
-      </section>
+      </div>
+
     </main>
   );
 }
