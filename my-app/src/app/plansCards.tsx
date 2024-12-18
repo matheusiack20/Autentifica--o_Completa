@@ -9,13 +9,12 @@ interface PlanPriceCardProps {
   benefits: string;
   borderColor: string;
   bgColor: string;
-  titleBgColor: string; // Cor de fundo do título 
+  titleBgColor: string; // Cor de fundo do título
   onSubscribe: () => void;
   buttonColor?: string; // Opcional
   iconColor?: string; // Opcional
-  buttonText?: string; // Texto do botão
-  titleText?: string; // Texto do título do plano
 }
+
 
 const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   isCheckedAnualMode,
@@ -28,9 +27,7 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   onSubscribe,
   buttonColor = 'bg-ternary',
   iconColor = '#DAFD00',
-  titleBgColor, // Cor de fundo do título personalizada
-  buttonText = "Assinar Agora", // Texto padrão do botão
-  titleText = name, // Texto padrão do título do plano
+  titleBgColor, // Recebe a cor de fundo personalizada
 }) => {
   return (
     <div
@@ -41,7 +38,7 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
         id="plan_name"
         className={`inline-block m-4 min-w-[130px] px-4 py-1 rounded-full ${titleBgColor}`}
       >
-        <h1 className="text-[20px] font-extrabold text-black">{titleText}</h1> {/* Título personalizado */}
+        <h1 className="text-[20px] font-extrabold text-black">{name}</h1>
       </div>
 
       {isCheckedAnualMode && (
@@ -70,10 +67,10 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
 
       <button
         id="button_buy_plan"
-        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95`}
+        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:scale-95`}
         onClick={onSubscribe}
       >
-        {buttonText} {/* Texto personalizado do botão */}
+        Assinar Agora
       </button>
 
       <div className="my-5 w-[200px] h-2 border-b border-white" />
