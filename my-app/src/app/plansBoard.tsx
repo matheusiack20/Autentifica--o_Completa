@@ -74,12 +74,14 @@ const PlansPriceBoard: React.FC = () => {
             name="Free"
             price={0}
             discount={0}
-            benefits="Período de Teste;Criação de 1 anúncio"
+            benefits="Período de Teste; Criação de 1 anúncio"
             borderColor={checked ? 'border-[#1cbf03]' : 'border-[#1cbf03]'}
-            bgColor="bg-[#00000] hover:shadow-[#1cbf03]"
-            buttonColor="bg-[#1cbf03] hover:shadow-[#c1c1c1]"
-            iconColor="#1cbf03"
-            titleBgColor="bg-[#1cbf03]"
+            bgColor="bg-[#dafd00] hover:shadow-[#1cbf03]"
+            buttonColor="bg-[white] hover:shadow-[white]"
+            iconColor="#000000"
+            titleBgColor="bg-[white]"
+            titleText="Free"
+            buttonText="Assinar Agora"
             onSubscribe={() => handleSubscribe('free')}
           />
 
@@ -102,10 +104,10 @@ const PlansPriceBoard: React.FC = () => {
             discount={25.0}
             benefits="Cadastro de Produtos; Criação de Categorias; Sugestões de Imagens; Suporte Ticket"
             borderColor={checked ? 'border-[#1cbf03]' : 'border-[#1cbf03]'}
-            bgColor="bg-[#000000] hover:shadow-[#1cbf03]"
-            buttonColor="bg-[#1cbf03] hover:shadow-[#c1c1c1]"
-            iconColor="#1cbf03"
-            titleBgColor="bg-[#1cbf03]"
+            bgColor="bg-[#dafd00] hover:shadow-[#1cbf03]"
+            buttonColor="bg-[white] hover:shadow-[white]"
+            iconColor="#000000"
+            titleBgColor="bg-[white]"
             onSubscribe={() => handleSubscribe('prata')}
           />
 
