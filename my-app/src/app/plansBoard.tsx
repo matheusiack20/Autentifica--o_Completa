@@ -75,11 +75,10 @@ const PlansPriceBoard: React.FC = () => {
             price={0}
             discount={0}
             benefits="Período de Teste; Criação de 1 anúncio"
-            borderColor={checked ? 'border-[#dafd00]' : 'border-[#dafd00]'}
-            bgColor="bg-[#dafd00] hover:shadow-[#dafd00]"
-            buttonColor="bg-[white] hover:shadow-[#dafd00]"
-            iconColor="#000000"
-            titleBgColor="bg-[white]"
+            borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
+            bgColor="bg-[#000000]"
+            buttonColor="bg-[#DAFD00] hover:shadow-[black]"
+            titleBgColor="bg-[#DAFD00]"
             onSubscribe={() => handleSubscribe('free')}
           />
 
@@ -103,9 +102,14 @@ const PlansPriceBoard: React.FC = () => {
             benefits="Cadastro de Produtos; Criação de Categorias; Sugestões de Imagens; Suporte Ticket"
             borderColor={checked ? 'border-[#dafd00]' : 'border-[#dafd00]'}
             bgColor="bg-[#dafd00] hover:shadow-[#dafd00]"
-            buttonColor="bg-[white] hover:shadow-[#dafd00]"
+            buttonColor="bg-[black] hover:shadow-[#dafd00]"
             iconColor="#000000"
-            titleBgColor="bg-[white] "
+            titleBgColor="bg-[black]"
+            titleTextColor="text-white"
+            buttonTextColor="text-white"
+            benefitTextColor="text-black"
+            priceTextColor="text-black"
+            monthTextColor="text-black"
             onSubscribe={() => handleSubscribe('prata')}
           />
 

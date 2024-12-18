@@ -10,11 +10,15 @@ interface PlanPriceCardProps {
   borderColor: string;
   bgColor: string;
   titleBgColor: string; // Cor de fundo do título
+  titleTextColor?: string; // Cor da letra do título
+  buttonColor?: string; // Cor de fundo do botão (opcional)
+  buttonTextColor?: string; // Cor da letra do botão (opcional)
+  benefitTextColor?: string; // Cor do texto dos benefícios
+  priceTextColor?: string; // Cor do valor
+  monthTextColor?: string; // Cor do texto "mês"
+  iconColor?: string; // Cor do ícone dos benefícios
   onSubscribe: () => void;
-  buttonColor?: string; // Opcional
-  iconColor?: string; // Opcional
 }
-
 
 const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   isCheckedAnualMode,
@@ -24,21 +28,26 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   benefits,
   borderColor,
   bgColor,
-  onSubscribe,
+  titleBgColor,
+  titleTextColor = 'text-black', // Valor padrão
   buttonColor = 'bg-ternary',
+  buttonTextColor = 'text-white', // Valor padrão
+  benefitTextColor = 'text-white', // Valor padrão
+  priceTextColor = 'text-white', // Valor padrão
+  monthTextColor = 'text-white', // Valor padrão
   iconColor = '#DAFD00',
-  titleBgColor, // Recebe a cor de fundo personalizada
+  onSubscribe,
 }) => {
   return (
     <div
       className={`select-none flex flex-col items-center border ${borderColor} w-[300px] text-center ${bgColor} m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg hover:shadow-ternary transition-shadow duration-300`}
     >
-      {/* Nome do Plano com fundo personalizado */}
+      {/* Nome do Plano com fundo e cor de texto personalizáveis */}
       <div
         id="plan_name"
         className={`inline-block m-4 min-w-[130px] px-4 py-1 rounded-full ${titleBgColor}`}
       >
-        <h1 className="text-[20px] font-extrabold text-black">{name}</h1>
+        <h1 className={`text-[20px] font-extrabold ${titleTextColor}`}>{name}</h1>
       </div>
 
       {isCheckedAnualMode && (
@@ -56,18 +65,18 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
             R$ {price.toFixed(2).replace('.', ',')}
           </span>
         )}
-        <span className="text-white font-extrabold text-[20px]">
+        <span className={`font-extrabold text-[20px] ${priceTextColor}`}>
           R${' '}
           {(isCheckedAnualMode ? (price * (100 - discount)) / 100 : price)
             .toFixed(2)
             .replace('.', ',')}{' '}
-          <span className="text-[14px] text-white">/mês</span>
+          <span className={`text-[14px] ${monthTextColor}`}>/mês</span>
         </span>
       </div>
 
       <button
         id="button_buy_plan"
-        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:scale-95`}
+        className={`text-[22px] ${buttonTextColor} ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:scale-95`}
         onClick={onSubscribe}
       >
         Assinar Agora
@@ -78,7 +87,7 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
         {benefits.split(';').map((benefit, index) => (
           <div
             key={index}
-            className="text-white flex items-center mb-2 text-[14px] whitespace-nowrap"
+            className={`flex items-center mb-2 text-[14px] whitespace-nowrap ${benefitTextColor}`}
           >
             <FaCheck className="mr-2" style={{ color: iconColor }} />
             <span>{benefit.trim()}</span>
