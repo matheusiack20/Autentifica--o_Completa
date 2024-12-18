@@ -1,5 +1,25 @@
 import React from 'react';
 import { FaCheck } from 'react-icons/fa';
+
+interface PlanPriceCardProps {
+  isCheckedAnualMode: boolean;
+  name: string;
+  price: number;
+  discount: number;
+  benefits: string;
+  borderColor: string;
+  bgColor: string;
+  titleBgColor: string; // Cor de fundo do título
+  titleTextColor?: string; // Cor da letra do título
+  buttonColor?: string; // Cor de fundo do botão (opcional)
+  buttonTextColor?: string; // Cor da letra do botão (opcional)
+  benefitTextColor?: string; // Cor do texto dos benefícios
+  priceTextColor?: string; // Cor do valor
+  monthTextColor?: string; // Cor do texto "mês"
+  iconColor?: string; // Cor do ícone dos benefícios
+  onSubscribe: () => void;
+}
+
 const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   isCheckedAnualMode,
   name,
@@ -9,22 +29,20 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   borderColor,
   bgColor,
   titleBgColor,
-  titleTextColor = 'text-black',
+  titleTextColor = 'text-black', // Valor padrão
   buttonColor = 'bg-ternary',
-  buttonTextColor = 'text-white',
-  benefitTextColor = 'text-white',
-  priceTextColor = 'text-white',
-  monthTextColor = 'text-white',
+  buttonTextColor = 'text-white', // Valor padrão
+  benefitTextColor = 'text-white', // Valor padrão
+  priceTextColor = 'text-white', // Valor padrão
+  monthTextColor = 'text-white', // Valor padrão
   iconColor = '#DAFD00',
+  onSubscribe,
 }) => {
-  const handleSubscribe = () => {
-    window.location.href = 'https://c119-131-0-29-227.ngrok-free.app';
-  };
-
   return (
     <div
       className={`select-none flex flex-col items-center border ${borderColor} w-[300px] text-center ${bgColor} m-2 rounded-2xl min-h-[500px] h-auto pb-10 shadow-lg hover:shadow-lg hover:shadow-ternary transition-shadow duration-300`}
     >
+      {/* Nome do Plano com fundo e cor de texto personalizáveis */}
       <div
         id="plan_name"
         className={`inline-block m-4 min-w-[130px] px-4 py-1 rounded-full ${titleBgColor}`}
@@ -59,7 +77,7 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
       <button
         id="button_buy_plan"
         className={`text-[22px] ${buttonTextColor} ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:scale-95`}
-        onClick={handleSubscribe}
+        onClick={onSubscribe}
       >
         Assinar Agora
       </button>
