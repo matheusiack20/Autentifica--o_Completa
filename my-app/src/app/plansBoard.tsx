@@ -79,7 +79,6 @@ const PlansPriceBoard: React.FC = () => {
             bgColor="bg-[#000000]"
             buttonColor="bg-[#DAFD00] hover:shadow-[black]"
             titleBgColor="bg-[#DAFD00]"
-            onSubscribe={() => handleSubscribe('free')}
           />
 
           <PlanPriceCard
@@ -91,7 +90,6 @@ const PlansPriceBoard: React.FC = () => {
             borderColor={checked ? 'border-[#DAFD00]' : 'border-[#DAFD00]'}
             bgColor="bg-[#000000]"
             titleBgColor="bg-[#DAFD00]"
-            onSubscribe={() => handleSubscribe('bronze')}
           />
 
           <PlanPriceCard
@@ -110,7 +108,6 @@ const PlansPriceBoard: React.FC = () => {
             benefitTextColor="text-black"
             priceTextColor="text-black"
             monthTextColor="text-black"
-            onSubscribe={() => handleSubscribe('prata')}
           />
 
           <PlanPriceCard
@@ -123,7 +120,6 @@ const PlansPriceBoard: React.FC = () => {
             bgColor="bg-[#000000]"
             buttonColor="bg-[#DAFD00] hover:shadow-[black]"
             titleBgColor="bg-[#DAFD00]"
-            onSubscribe={() => handleSubscribe('ouro')}
           />
         </div>
       </center>

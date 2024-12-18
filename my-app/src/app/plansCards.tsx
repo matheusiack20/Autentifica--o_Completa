@@ -16,7 +16,6 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
   priceTextColor = 'text-white',
   monthTextColor = 'text-white',
   iconColor = '#DAFD00',
-  onSubscribe,
 }) => {
   const handleSubscribe = () => {
     window.location.href = 'https://c119-131-0-29-227.ngrok-free.app';

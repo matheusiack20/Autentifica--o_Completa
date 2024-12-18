@@ -88,7 +88,7 @@ const Planos = () => {
 
           {/* Seção de planos com flexbox */}
           <div className="flex justify-center gap-8">
-            <PlansPriceBoard plans={plans[planType]} onSubscribe={handleSubscribe} />
+            <PlansPriceBoard plans={plans[planType]} />
           </div>
         </div>
 
