@@ -2,13 +2,11 @@ import NextAuth, { AuthOptions, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
-import argon2 from "argon2";
 import { connectOnce } from "../../../../utils/db";
 import User from "../../../../models/User";
 
 const genericAvatar = "/Generic_avatar.png";
 
-// Extendendo o User do NextAuth
 interface User extends NextAuthUser {
   _id: string;
   name: string;
@@ -26,14 +24,10 @@ declare module "next-auth" {
       role?: string;
     };
   }
-  interface User {
-    role?: string;
-  }
 }
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
-    // Credenciais (login por email e senha)
     CredentialsProvider({
       id: "credentials",
       name: "Credenciais",
@@ -47,54 +41,46 @@ export const authOptions: AuthOptions = {
         }
 
         try {
-          console.log("🔐 Credenciais recebidas:", credentials);
+          console.log("Credenciais recebidas:", credentials);
 
           // Conexão com o banco de dados
           await connectOnce();
 
-          // Busca o usuário no banco de dados
-          const user = await User.findOne({ email: credentials.email });
+          // Busca o usuário e verifica a senha
+          const user = await User.findUserWithPassword(
+            credentials.email,
+            credentials.password
+          ) as User;
+
           if (!user) {
-            throw new Error("Usuário não encontrado.");
+            console.error("Usuário não encontrado ou senha incorreta.");
+            throw new Error("Credenciais inválidas. Por favor, tente novamente.");
           }
 
-          // Verifica a senha com argon2
-          const passwordMatch = await argon2.verify(user.password, credentials.password);
-          if (!passwordMatch) {
-            throw new Error("Senha incorreta.");
-          }
-
-          // Retorna os dados do usuário autenticado
+          // Retorna as informações do usuário autenticado
           return {
             id: user._id.toString(),
             name: user.name,
             email: user.email,
-            role: user.role || "user",
+            role: user.role,
             image: user.image || genericAvatar,
           };
         } catch (error) {
-          console.error("❌ Erro durante a autorização:", error);
-          throw new Error("Credenciais inválidas. Tente novamente.");
+          console.error("Erro durante a autorização:", error.message);
+          throw new Error("Erro durante a autorização. Por favor, tente novamente.");
         }
       },
     }),
-
-    // Google Provider
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-
-    // Facebook Provider
     FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID || "",
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     }),
   ],
-
-  // Callbacks
   callbacks: {
-    // Callback para manipular o token JWT
     async jwt({ token, user }) {
       if (user) {
         token.role = (user as User).role || "user";
@@ -104,38 +90,29 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
-
-    // Callback para incluir os dados do token na sessão
     async session({ session, token }) {
-      if (token) {
-        session.user = {
-          name: token.name,
-          email: token.email,
-          image: token.picture,
-          role: token.role as string,
-        };
-      }
+      session.user = {
+        ...session.user,
+        role: token.role as string | undefined,
+        image: token.picture,
+        email: token.email,
+        name: token.name,
+      };
       return session;
     },
   },
-
-  // Páginas customizadas
   pages: {
     signIn: "/login",
     error: "/error",
     signOut: "/",
   },
-
-  // Estratégia de sessão usando JWT
   session: {
     strategy: "jwt",
   },
-
-  // Secret do NextAuth
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// Configuração dos handlers do NextAuth
+// Handlers para rotas de API do Next.js
 const handler = NextAuth(authOptions);
 export const GET = handler;
 export const POST = handler;
