@@ -67,7 +67,7 @@ const PlanPriceCard: React.FC<PlanPriceCardProps> = ({
 
       <button
         id="button_buy_plan"
-        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:bg-white hover:scale-95`}
+        className={`text-[22px] text-black ${buttonColor} font-extrabold px-3 py-1 rounded-lg transition-all hover:scale-95`}
         onClick={onSubscribe}
       >
         Assinar Agora
