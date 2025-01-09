@@ -210,8 +210,8 @@ export default function Register() {
             <center>
               <button
                 type="submit"
-                className={`p-2 bg-gradient-to-r from-[#1d1d1f] via-[#DAFD00] to-[#1d1d1f] rounded-md text-center w-[200px] ${
-                  isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+                className={`p-2 bg-[#DAFD00] rounded-md text-center w-[200px] text-[#2c2c2c] font-medium ${
+                    isSubmitting ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                 }`}
                 disabled={isSubmitting}
               >
@@ -234,70 +234,136 @@ export default function Register() {
 
             {showTermsModal && (
               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white p-4 rounded-md max-w-md">
+                <div className="bg-white p-4 rounded-md max-w-xl">
                   <h2 className="text-center font-bold text-[black] mb-2">
                     Termos de Uso
                   </h2>
                   <div className="overflow-y-scroll max-h-64 p-2 border">
-                    <p className="text-[black] mb-4">
+                    <p className="text-[black] mb-4 text-justify">
                       Bem-vindo à MAP. Ao utilizar nossos serviços, você
                       concorda com os seguintes Termos de Serviço. Leia
                       atentamente cada item, pois ele descreve os direitos e
                       responsabilidades dos usuários.
                     </p>
-                    <p className="text-[black]">
+                    <p className="text-[black] text-justify">
                       <b>1. Aceitação dos Termos</b>
-                      <br />
-                      Ao criar uma conta e acessar ou utilizar nossos serviços,
-                      você concorda com todos os termos descritos aqui. Caso
-                      você não concorde com qualquer parte destes Termos, não
-                      deverá usar o serviço.
-                      <br />
-                      <br />
+                      <br/>
+                      Ao utilizar os serviços da plataforma Map Marketplaces,
+                      você concorda integralmente com os presentes Termos de Uso.
+                      Caso não concorde com qualquer cláusula aqui descrita,
+                      recomenda-se que não utilize nossos serviços.
+                      O uso contínuo da plataforma será interpretado
+                      como aceitação tácita dos termos.
+                      <br/>
+                      <br/>
                       <b>2. Cadastro de Usuário</b>
-                      <br />
-                      Para utilizar determinados recursos, você deve criar uma
-                      conta fornecendo informações precisas e completas. Você é
-                      responsável pela segurança da sua conta e pela
-                      confidencialidade de suas informações de login.
-                      <br />
-                      <br />
-                      <b>3. Privacidade e Uso de Dados</b>
-                      <br />
-                      Nossa política de privacidade descreve como coletamos,
-                      usamos e protegemos suas informações pessoais. Ao utilizar
-                      nossos serviços, você concorda com essa coleta e uso de
-                      dados, conforme descrito na política de privacidade.
-                      <br />
-                      <br />
+                      <br/>
+                      Você pode ser obrigado a registrar uma conta conosco para fins de
+                      uso de nossos serviços. Você concorda que as informações que você fornece são precisas,
+                      até onde você sabe. Você será obrigado a nos fornecer certas informações pessoais como
+                      parte de sua conta. Você concorda em manter as informações quanto à sua precisão.
+                      Deixar de manter uma conta atualizada pode resultar na sua incapacidade de usar nossos serviços.
+                      Você é o único responsável por todas as atividades que ocorrem em sua conta.
+                      <br/>
+                      <br/>
+                      <b>3. Informações da conta</b>
+                      <br/>
+                      A privacidade e segurança dos seus dados são prioridades para a Map Marketplaces.
+                      Ao utilizar nossa plataforma, você concorda com a coleta, processamento e uso dos
+                      seus dados pessoais de acordo com nossa Política de Privacidade.
+                      Os dados coletados serão utilizados exclusivamente para a prestação dos serviços,
+                      como criação e publicação de anúncios. Também podemos usar suas informações para
+                      melhorar nossos serviços, realizar análises internas ou enviar comunicações sobre
+                      atualizações, novos recursos ou ofertas promocionais, desde que você tenha consentido
+                      previamente.
+                      Nós nos comprometemos a adotar medidas de segurança para proteger seus dados, mas não
+                      nos responsabilizamos por danos decorrentes de falhas de segurança fora de nosso controle.
+                      <br/>
+                      <br/>
+                      Uso da conta. Você concorda em usar sua conta exclusivamente para o benefício de nossos
+                      serviços. Você também concorda que não permite que terceiros usem sua conta ou usem sua
+                      conta para quaisquer serviços não associados à sua propriedade pessoal ou propriedade sobre
+                      a qual você tenha controle legal. Você concorda que usará nossos serviços apenas para atividades
+                      legais. Você concorda, conforme necessário, em oferecer prova de identidade ao concluir os
+                      serviços
+                      para garantir que você corresponda aos detalhes da conta.
+                      <br/>
+                      <br/>
                       <b>4. Responsabilidades do Usuário</b>
-                      <br />
-                      Você concorda em utilizar o serviço de forma responsável e
-                      em conformidade com todas as leis aplicáveis. Qualquer
-                      atividade em sua conta é de sua responsabilidade.
-                      <br />
-                      <br />
+                      <br/>
+                      Ao utilizar a Map Marketplaces, o usuário declara que todas as informações fornecidas para a
+                      criação de anúncios são verdadeiras, completas e legais. O usuário é integralmente responsável
+                      pelo conteúdo dos anúncios, incluindo o cumprimento das normas aplicáveis, como legislações de
+                      publicidade, direitos autorais, e regulamentos específicos das plataformas integradas.
+                      O usuário também se compromete a não utilizar o serviço para criar ou publicar anúncios que
+                      contenham
+                      conteúdo impróprio, ilegal, ofensivo ou que viole as políticas das plataformas parceiras, como
+                      Bling
+                      e Olist. Caso isso ocorra, a Map Marketplaces se reserva o direito de suspender ou encerrar a
+                      conta
+                      do usuário sem aviso prévio.
+                      Além disso, o usuário reconhece que é sua responsabilidade revisar e aprovar o anúncio antes de
+                      sua
+                      publicação nas plataformas integradas.
+                      <br/>
+                      <br/>
                       <b>5. Modificações do Serviço</b>
-                      <br />
-                      Podemos alterar ou descontinuar nossos serviços a qualquer
-                      momento, com ou sem aviso prévio. Quaisquer modificações
-                      nos Termos de Serviço serão notificadas através do nosso
-                      site e entrarão em vigor imediatamente.
-                      <br />
-                      <br />
+                      <br/>
+                      A Map Marketplaces reserva-se o direito de modificar, suspender ou descontinuar, temporária ou
+                      permanentemente, qualquer funcionalidade ou parte de seus serviços, a qualquer momento, sem
+                      aviso prévio. Essas mudanças podem incluir ajustes nas integrações com plataformas de terceiros,
+                      alterações na estrutura do serviço ou remoção de funcionalidades.
+
+                      Sempre que possível, notificaremos os usuários sobre alterações significativas, mas o uso contínuo
+                      da plataforma após a implementação das mudanças será considerado como aceitação das mesmas. A Map
+                      Marketplaces não se responsabiliza por eventuais impactos causados por tais modificações, desde
+                      que estejam
+                      de acordo com os presentes Termos de Uso.
+                      <br/>
+                      <br/>
                       <b>6. Limitação de Responsabilidade</b>
-                      <br />
-                      Não nos responsabilizamos por quaisquer danos diretos,
-                      indiretos, incidentais ou punitivos resultantes do uso ou
-                      da incapacidade de uso do serviço.
-                      <br />
-                      <br />
-                      <b>7. Alterações e Cancelamento</b>
-                      <br />
-                      Reservamo-nos o direito de modificar ou encerrar a conta
-                      de um usuário que viole os termos estabelecidos. Você pode
-                      cancelar sua conta a qualquer momento através das
-                      configurações da sua conta.
+                      <br/>
+                      A Map Marketplaces oferece seus serviços "como estão", sem garantia de resultados específicos,
+                      como aumento de vendas, visibilidade ou sucesso dos anúncios gerados e publicados. Não somos
+                      responsáveis por falhas técnicas, indisponibilidades ou problemas relacionados a plataformas
+                      de terceiros, como Bling e Olist, nem por eventuais modificações feitas por essas plataformas
+                      que afetem as integrações com nosso sistema.
+
+                      O usuário reconhece que é responsável por revisar os anúncios antes da publicação e assegurar
+                      que o conteúdo esteja em conformidade com as leis e regulamentos aplicáveis. A Map Marketplaces
+                      não se responsabiliza por erros, omissões ou interpretações incorretas nos anúncios criados com
+                      base nas informações fornecidas pelo usuário.
+
+                      Em nenhuma circunstância a Map Marketplaces será responsável por perdas financeiras, danos
+                      incidentais,
+                      indiretos ou consequentes, incluindo lucros cessantes, interrupção de negócios ou perda de dados,
+                      decorrentes do uso ou incapacidade de usar nossos serviços.
+                      <br/>
+                      <br/>
+                      <b>7. Cancelamento</b>
+                      <br/>
+                      Após o cancelamento, sua assinatura permanecerá ativa até o final do período de cobrança atual,
+                      permitindo acesso contínuo aos serviços até o término desse período (exceto nos casos em que seu
+                      acesso seja suspenso ou encerrado conforme disposto abaixo). No entanto, você não terá direito a
+                      reembolso por valores já pagos.
+
+                      A Map Marketplaces reserva-se o direito de negar acesso a todos ou parte dos serviços ou encerrar
+                      sua conta, com ou sem aviso prévio, caso seja identificada qualquer conduta ou atividade que viole
+                      estes Termos de Uso, os direitos da Map Marketplaces, ou que seja considerada inadequada ou
+                      prejudicial, a exclusivo critério da empresa. Em tais casos, o cancelamento ou suspensão não dará
+                      direito a reembolso.
+                      <br/>
+                      <br/>
+                      <b>8. Atividades Bancárias</b>
+                      <br/>
+                      Utilizamos serviços de terceiros para fins de processamento de quaisquer fundos como parte de nossos
+                      serviços. Não rastreamos ou retemos nenhuma informação sobre o uso de suas informações bancárias,
+                      incluindo, mas não se limitando a nomes de usuário e senhas. Não aceitamos nenhuma responsabilidade
+                      ou segurança pelo uso de nossos serviços no que se refere à proteção de suas informações bancárias.
+                      Embora nos esforcemos para proteger suas informações, você usa nossos serviços NO ESTADO EM QUE SE
+                      ENCONTRAM e aceita toda a responsabilidade e risco de usar nossos serviços e serviços de terceiros.
+                      Você tem a responsabilidade exclusiva de garantir que tome as precauções necessárias para proteger
+                      suas informações privadas.
                     </p>
                   </div>
                   <div className="flex justify-center mt-4">
