@@ -58,8 +58,7 @@ userSchema.statics.findUserWithPassword = async function (
   password: string
 ): Promise<IUser | null> {
   try {
-    const user = await this.findOne({ email });
-
+    const user = await this.findOne({ email: email.trim() });
     if (!user) return null;
 
     const isValid = await argon2.verify(user.password, password.trim()); // Verifica se a senha fornecida é válida
@@ -72,14 +71,17 @@ userSchema.statics.findUserWithPassword = async function (
   }
 };
 
-// Hook para hashear a senha antes de salvar o usuário
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   const user = this as IUser;
   if (user.isModified('password')) {
-    user.password = await argon2.hash(user.password); // Hash da senha antes de salvar
+    const isAlreadyHashed = user.password.startsWith('$argon2');
+    if (!isAlreadyHashed) {
+      user.password = await argon2.hash(user.password);
+    }
   }
   next();
 });
+
 
 // Verifica se o modelo já está registrado para evitar sobrescrever
 const User = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>("User", userSchema);

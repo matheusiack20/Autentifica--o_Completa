@@ -45,7 +45,7 @@ const authOptions: AuthOptions = {
 
           // Conexão com o banco de dados
           await connectOnce();
-
+          console.log("Tentando encontrar usuário com email:", credentials.email, credentials.password);
           // Busca o usuário e verifica a senha
           const user = await User.findUserWithPassword(
             credentials.email,
