@@ -226,6 +226,10 @@ export default function Register() {
               </Link>
             </span>
 
+            <p>
+              Para criar uma conta, clique no botão abaixo e siga as instruções. Se você já tem uma conta, clique em &quot;Entrar&quot;.
+            </p>
+
             {error && (
               <div className="text-red-500 text-sm text-center mt-2">
                 {error}

@@ -59,8 +59,6 @@ const Planos = () => {
           </div>
         </div>
 
-        {loading && <div className="text-center text-xl text-gray-300">Carregando...</div>}
-
       </div>
     </div>
   );
