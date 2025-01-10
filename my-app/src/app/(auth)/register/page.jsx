@@ -227,7 +227,7 @@ export default function Register() {
             </span>
 
             <p>
-              Para criar uma conta, clique no botão abaixo e siga as instruções. Se você já tem uma conta, clique em &quot;Entrar&quot;.
+              Para criar uma conta, clique no botão "Registrar" abaixo.
             </p>
 
             {error && (
