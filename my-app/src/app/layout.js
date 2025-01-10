@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import AuthProvider from "../components/AuthProvider";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/footer"; // Caminho correto
+import ChatWhatsApp from "../app/whats/ChatWhatsApp"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
             <main className="flex-grow">
               {children}
             </main>
+            <ChatWhatsApp />
           </AuthProvider>
           <Footer />
         </div>
