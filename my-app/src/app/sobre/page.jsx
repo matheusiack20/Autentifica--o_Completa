@@ -46,38 +46,6 @@ const Planos = () => {
     ],
   };
 
-  const handleSubscribe = async (plan) => {
-    setLoading(true);
-    try {
-      console.log("Iniciando pagamento para o plano:", plan);
-  
-      const response = await fetch("/api/process-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: plan.title,
-          amount: plan.price, // O preço enviado em reais
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        window.location.href = data.init_point;
-      } else {
-        console.error("Erro no backend:", data.error);
-        alert("Erro ao iniciar pagamento. Tente novamente.");
-      }
-    } catch (error) {
-      console.error("Erro ao iniciar pagamento:", error);
-      alert("Erro ao iniciar pagamento. Verifique sua conexão.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="bg-black text-white min-h-screen">
       <div className="container mx-auto py-12">
