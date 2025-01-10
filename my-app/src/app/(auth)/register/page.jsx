@@ -373,6 +373,7 @@ export default function Register() {
                     >
                       Fechar
                     </button>
+
                   </div>
                 </div>
               </div>

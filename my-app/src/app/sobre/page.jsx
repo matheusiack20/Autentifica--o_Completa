@@ -5,7 +5,6 @@ import "../style.css"
 
 const Planos = () => {
   const [planType] = useState('anual');
-  const [loading, setLoading] = useState(false);
 
   const plans = {
     anual: [
