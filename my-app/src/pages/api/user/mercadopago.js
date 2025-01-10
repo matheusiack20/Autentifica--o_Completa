@@ -29,7 +29,7 @@ async function createSubscriptionPreference(email, name, planName, planPrice, fr
         confirmacao: 'http://localhost:3000/confirmacao',
       },
       auto_return: 'approved',
-      notification_url: 'http://www.your-site.com/webhooks', // Alterar para o seu webhook real
+      notification_url: 'http://www.your-site.com/webhooks', // Alterar para o webhook real
       recurrence: {
         frequency, // Usando o valor de frequência passado para 1 ou 12 meses
         frequency_type: 'months',

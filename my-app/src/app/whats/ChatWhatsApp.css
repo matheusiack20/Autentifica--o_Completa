@@ -1,0 +1,184 @@
+/* Ícone do WhatsApp */
+#whatsapp-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+  }
+  
+  #whatsapp-icon img {
+    width: 60px;
+    height: 60px;
+    animation: pulse 1.5s infinite; /* Adiciona animação para destacar o ícone */
+  }
+  
+  /* Badge de notificação */
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Caixa de chat */
+  .chat-box {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 320px;
+    background: #ece5dd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    animation: slide-in 0.3s ease-out; /* Adiciona animação ao abrir o chat */
+  }
+  
+  /* Cabeçalho da caixa */
+  .chat-header {
+    background: #075e54;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+  }
+  
+  .chat-header img {
+    width: 35px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .chat-header span {
+    font-weight: bold;
+  }
+  
+  .chat-header .close-btn {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* Corpo do chat */
+  .chat-body {
+    padding: 15px;
+    background: #ece5dd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .chat-message {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    max-width: 80%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    font-size: 14px;
+  }
+  
+  .chat-message strong {
+    color: #737373;
+  }
+  
+  .chat-message::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 0;
+    border-color: #fff transparent transparent transparent;
+  }
+  
+  /* Timestamp */
+  .timestamp {
+    font-size: 12px;
+    color: gray;
+    text-align: right;
+    margin-top: 5px;
+  }
+  
+  /* Rodapé do chat */
+  .chat-footer {
+    text-align: center;
+    padding: 10px;
+    background: #fff;
+  }
+  
+  .chat-footer button {
+    background: #008069;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .chat-footer button:hover {
+    background: #006a56;
+  }
+  
+  .chat-footer button img {
+    width: 20px;
+  }
+  
+  /* Animação para destacar o ícone do WhatsApp */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Animação para a caixa de chat deslizar */
+  @keyframes slide-in {
+    from {
+      transform: translateY(50%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Responsividade */
+  @media (max-width: 400px) {
+    .chat-box {
+      width: 90%;
+      bottom: 70px;
+      right: 10px;
+    }
+  }
+  
