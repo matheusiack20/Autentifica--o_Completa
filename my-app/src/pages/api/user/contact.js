@@ -21,12 +21,12 @@ export default async function handler(req, res) {
       Messages: [
         {
           From: {
-            Email: "seu-email@dominio.com", // Substitua pelo email do seu domínio
-            Name: "Seu Nome ou Empresa",
+            Email: process.env.RECIPIENT_EMAIL, // Substitua pelo email do seu domínio
+            Name: "Contato MapMarketplaces",
           },
           To: [
             {
-              Email: "destinatario@dominio.com", // Substitua pelo email do suporte ou destinatário
+              Email: process.env.RECIPIENT_EMAIL, // Substitua pelo email do suporte ou destinatário
               Name: "Destinatário",
             },
           ],

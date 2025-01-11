@@ -98,7 +98,7 @@ const LoginPage = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className="flex flex-col gap-4 p-8 border-2 border-[#d4ef00] bg-[#2C2C2C] w-full max-w-sm shadow-md rounded-3xl">
+          <Form className="flex flex-col gap-4 p-3 border-2 border-[#d4ef00] bg-[#2C2C2C] w-full max-w-sm shadow-md rounded-3xl">
             <Link href="/" passHref>
               <div className="flex justify-center mb-4">
                 <Image src={imglogo} alt="Logo" width={150} height={150} />

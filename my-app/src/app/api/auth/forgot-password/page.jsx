@@ -85,7 +85,7 @@ export default function ForgotPassword() {
 
         <button
           type="submit"
-          className={`p-2 bg-gradient-to-r from-[#1d1d1f] via-[#DAFD00] to-[#1d1d1f] text-[#2a2a2a] rounded-md w-full ${
+          className={`p-2 bg-[#DAFD00] text-[#2a2a2a] rounded-md w-full ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={isLoading}
