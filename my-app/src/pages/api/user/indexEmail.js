@@ -23,7 +23,7 @@ const htmlContent = `
     <div class="container">
         <!-- Header com logo e título -->
         <div class="header">
-            <img src="https://media.licdn.com/dms/image/v2/D4D1BAQGzamC8NiJEhQ/company-background_10000/company-background_10000/0/1654550588153/mapmarketplaces_cover?e=2147483647&v=beta&t=XpKrj-evAMd3SY4OUnF0UjBc-7aZ7kEugnjDuwBZhJ8" alt="Logo" width="420" class="logo">
+            <img src="https://mapmarketplaces.com/assets/logoprincipal-CUFZ_LI_.png" alt="Logo" width="240" class="logo">
             <h1>Recuperação de Senha</h1>
         </div>
 
@@ -31,7 +31,13 @@ const htmlContent = `
         <div class="content">
             <p>Olá,</p>
             <p>Você solicitou a recuperação da sua senha. Utilize o seguinte token para redefinir sua senha:</p>
-            <p class="token">{{TOKEN}}</p>
+            
+            <p class="token" style="font-size: 15px; color: #333; margin: 20px 0;">
+                <strong style="font-size: 16px; color: #555;">Token:</strong>
+                  <span style="display: inline-block; padding: 10px; background-color: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; font-weight: bold; color: #262626;">
+                    {{TOKEN}}
+                  </span>
+            </p>
             <p>Se você não solicitou a alteração, ignore este e-mail. O token expirará em 1 hora.</p>
             <a href="{{RESET_URL}}" class="button">Redefinir Senha</a>
         </div>  
