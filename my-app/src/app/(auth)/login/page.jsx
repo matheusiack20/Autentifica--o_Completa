@@ -24,7 +24,7 @@ const LoginPage = () => {
   useEffect(() => {
     setIsClient(true);
     if (status === 'authenticated') {
-      router.push('/'); // Redireciona se o usuário já está autenticado
+      router.push('http://localhost:3001/'); // Redireciona se o usuário já está autenticado
     }
   }, [status, router]);
 

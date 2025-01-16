@@ -11,6 +11,7 @@ interface IUser extends Document {
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   comparePassword: (password: string) => Promise<boolean>;
+  announcementCount: number;
 }
 
 // Interface para o modelo User, que inclui o método estático
@@ -38,6 +39,7 @@ const userSchema = new Schema<IUser>(
     image: { type: String, default: "/Generic_avatar.png" },
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
+    announcementCount: {type:Number, default:0},
   },
   {
     timestamps: true, // Cria os campos createdAt e updatedAt automaticamente

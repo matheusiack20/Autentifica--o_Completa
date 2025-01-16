@@ -23,7 +23,7 @@ const htmlContent = `
     <div class="container">
         <!-- Header com logo e título -->
         <div class="header">
-            <img src="https://mapmarketplaces.com/assets/logoprincipal-CUFZ_LI_.png" alt="Logo" width="240" class="logo">
+            <img src="https://github.com/matheusiack20/Autentifica--o_Completa/blob/main/my-app/public/ANUNCia.png?raw=true" alt="Logo" width="240" class="logo">
             <h1>Recuperação de Senha</h1>
         </div>
 

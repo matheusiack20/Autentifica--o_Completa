@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { connectOnce } from "../../../../utils/db";
 import User from "../../../../models/User";
+import jwt from 'jsonwebtoken';
 
 const genericAvatar = "/Generic_avatar.png";
 
@@ -48,9 +49,16 @@ const authOptions: AuthOptions = {
           console.log("Tentando encontrar usuário com email:", credentials.email, credentials.password);
           // Busca o usuário e verifica a senha
           const user = await User.findUserWithPassword(
-            credentials.email,
-            credentials.password
+              credentials.email,
+              credentials.password
           ) as User;
+          const jwt = require('jsonwebtoken');
+          const secretKey = 'minha-chave-secreta';
+
+          const payload = { username: user.name, id: user._id };  // Agora é um objeto simples
+          console.log(payload);
+          const token = jwt.sign(payload, secretKey);
+          console.log(token);
 
           if (!user) {
             console.error("Usuário não encontrado ou senha incorreta.");
@@ -64,6 +72,7 @@ const authOptions: AuthOptions = {
             email: user.email,
             role: user.role,
             image: user.image || genericAvatar,
+            token,
           };
         } catch (error) {
           console.error("Erro durante a autorização:", error.message);
