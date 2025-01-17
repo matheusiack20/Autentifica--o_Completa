@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { connectOnce } from "../../../../utils/db";
 import User from "../../../../models/User";
+import jwt from 'jsonwebtoken';
 
 const genericAvatar = "/Generic_avatar.png";
 
@@ -22,6 +23,7 @@ declare module "next-auth" {
       email?: string | null;
       image?: string | null;
       role?: string;
+      authToken?: string;
     };
   }
 }
@@ -57,6 +59,8 @@ const authOptions: AuthOptions = {
             throw new Error("Credenciais inválidas. Por favor, tente novamente.");
           }
 
+          // const decoded = jwt.verify(token, secretKey);
+          // console.log("Token válido:", decoded);
           // Retorna as informações do usuário autenticado
           return {
             id: user._id.toString(),
@@ -83,21 +87,21 @@ const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as User).role || "user";
-        token.picture = user.image || genericAvatar;
-        token.email = user.email;
-        token.name = user.name;
+        token.id = user.id; // Adiciona o ID ao token
+        token.email = user.email; // Adiciona a role ao token
+        token.role = (user as User).role || "user"
       }
       return token;
     },
     async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        role: token.role as string | undefined,
-        image: token.picture,
-        email: token.email,
-        name: token.name,
-      };
+      if (token) {
+        session.user.role = token.role as string || "user"; // Adiciona a role do token à sessão
+        session.user.authToken = jwt.sign(
+          { id: token.id, role: token.role },
+          process.env.JWT_SECRET!,
+          { expiresIn: "1h" } // Exemplo: token de 1 hora
+        );
+      }
       return session;
     },
   },

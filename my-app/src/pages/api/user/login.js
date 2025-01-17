@@ -2,6 +2,22 @@ import User from '../../../models/User'; // Certifique-se de que o caminho está
 
 const loginHandler = async (req, res) => {
   if (req.method === 'POST') {
+    try {
+      const response = await axios.post('http://localhost:3001/api/auth/login', {
+        email,
+        password,
+      }, {
+        withCredentials: true, // Envia cookies junto com a requisição
+      });
+            // Agora você pode pegar os dados da sessão
+      const sessionResponse = await axios.get('http://localhost:3001/api/auth/session', {
+        withCredentials: true,
+      });
+
+      console.log('Dados da sessão:', sessionResponse.data);
+    } catch (error) {
+      console.error('Erro ao fazer login ou obter a sessão:', error);
+    }
     const { email, password } = req.body;
 
     if (!email || !password) {
