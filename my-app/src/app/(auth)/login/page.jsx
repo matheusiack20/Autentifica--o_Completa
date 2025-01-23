@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, useSession, getSession } from 'next-auth/react'; // Importar getSession
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -13,6 +13,7 @@ import imglogo from '/public/LogoMAP.png'; // Caminho da imagem do logo
 import eyeIcon from '/public/icons/olhofechado.png'; // Ícone para mostrar senha
 import eyeClosed from '/public/icons/olhoaberto.png'; // Ícone para ocultar senha
 import React from 'react';
+import Cookies from 'js-cookie';
 
 const LoginPage = () => {
   const { data: session, status } = useSession();
@@ -56,18 +57,28 @@ const LoginPage = () => {
     setError(''); // Reset error state before attempting login
 
     try {
+      console.log('Tentando fazer login com:', values); // Adicione este log
       const result = await signIn('credentials', {
         email: values.email,
         password: values.password,
         redirect: false, // Mantemos isso para gerenciar o redirecionamento manualmente
       });
 
+      console.log('Resultado do signIn:', result); // Adicione este log
+
       if (result?.error) {
         setError(result.error.replace('Error: ', '')); // Exibe mensagem de erro
         resetForm();
         setTimeout(() => setError(''), 3000); // Limpa o erro após 3 segundos
       } else {
-        router.push(result.url || '/'); // Redireciona após login bem-sucedido
+        // Armazena o token JWT em um cookie
+        const session = await getSession();
+        console.log('Sessão após login:', session); // Adicione este log
+        if (session?.user?.authToken) {
+          console.log('Token JWT:', session.user.authToken); // Adicione este log
+          Cookies.set('authToken', session.user.authToken, { expires: 1 }); // Armazena o token em um cookie
+        }
+        //router.push('/user-account'); // Redireciona após login bem-sucedido
       }
     } catch (err) {
       console.error('Erro ao fazer login:', err);
@@ -77,13 +88,22 @@ const LoginPage = () => {
 
   async function handleSocialLogin(provider) {
     try {
+      console.log('Tentando login social com:', provider); // Adicione este log
       const result = await signIn(provider, { redirect: false });
+
+      console.log('Resultado do login social:', result); // Adicione este log
 
       if (result?.error) {
         console.error('Erro no login social:', result.error);
         setError(result.error.replace('Error: ', ''));
       } else {
-        router.push(result.url || '/'); // Redireciona após login social bem-sucedido
+        const session = await getSession();
+        console.log('Sessão após login social:', session); // Adicione este log
+        if (session?.user?.authToken) {
+          console.log('Token JWT:', session.user.authToken); // Adicione este log
+          Cookies.set('authToken', session.user.authToken, { expires: 1 }); // Armazena o token em um cookie
+        }
+        router.push('/user-account'); // Redireciona após login social bem-sucedido
       }
     } catch (error) {
       console.error('Erro ao tentar login social com', provider, ':', error);

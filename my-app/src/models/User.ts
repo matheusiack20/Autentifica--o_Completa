@@ -10,6 +10,7 @@ interface IUser extends Document {
   image: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
+  authToken: string;
   comparePassword: (password: string) => Promise<boolean>;
 }
 
