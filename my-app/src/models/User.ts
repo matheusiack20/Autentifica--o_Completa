@@ -10,7 +10,10 @@ interface IUser extends Document {
   image: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
+  announcementCount: number;
+  isTrial: boolean;
   authToken: string;
+  plan: mongoose.Schema.Types.ObjectId;
   comparePassword: (password: string) => Promise<boolean>;
 }
 
@@ -37,6 +40,9 @@ const userSchema = new Schema<IUser>(
     name: { type: String, required: true },
     role: { type: String, default: "user" },
     image: { type: String, default: "/Generic_avatar.png" },
+    announcementCount: { type: Number, default: 0 },
+    isTrial: { type: Boolean, default: false },
+    plan: { type: mongoose.Schema.Types.ObjectId, ref: 'Plan', default: null },    
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
   },
