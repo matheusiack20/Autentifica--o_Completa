@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import imglogo from "/public/LogoMAP.png";
+import imglogo from "/public/ANUNCia.png";
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function Header() {
@@ -56,8 +56,8 @@ export default function Header() {
           <Image
             src={imglogo}
             alt="Logo MAP"
-            width={120}
-            height={100}
+            width={140}
+            height={120}
             className="cursor-pointer"
           />
         </Link>
