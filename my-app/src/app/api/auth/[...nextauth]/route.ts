@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import { connectOnce } from "../../../../utils/db";
 import User from "../../../../models/User";
+import jwt from 'jsonwebtoken';
 
 const genericAvatar = "/Generic_avatar.png";
 
@@ -13,6 +14,7 @@ interface User extends NextAuthUser {
   email: string;
   role: string;
   image?: string;
+  authToken?: string; // Add authToken property
 }
 
 declare module "next-auth" {
@@ -22,6 +24,7 @@ declare module "next-auth" {
       email?: string | null;
       image?: string | null;
       role?: string;
+      authToken?: string; // Add authToken property
     };
   }
 }
@@ -48,14 +51,17 @@ const authOptions: AuthOptions = {
           console.log("Tentando encontrar usuário com email:", credentials.email, credentials.password);
           // Busca o usuário e verifica a senha
           const user = await User.findUserWithPassword(
-            credentials.email,
-            credentials.password
+              credentials.email,
+              credentials.password
           ) as User;
 
           if (!user) {
             console.error("Usuário não encontrado ou senha incorreta.");
             throw new Error("Credenciais inválidas. Por favor, tente novamente.");
           }
+
+          // Gera o token JWT
+          const authToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '5h' });
 
           // Retorna as informações do usuário autenticado
           return {
@@ -64,12 +70,13 @@ const authOptions: AuthOptions = {
             email: user.email,
             role: user.role,
             image: user.image || genericAvatar,
+            authToken, // Adiciona o token JWT ao JSON de resposta
           };
         } catch (error) {
           console.error("Erro durante a autorização:", error.message);
           throw new Error("Erro durante a autorização. Por favor, tente novamente.");
         }
-      },
+      }
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -87,6 +94,7 @@ const authOptions: AuthOptions = {
         token.picture = user.image || genericAvatar;
         token.email = user.email;
         token.name = user.name;
+        token.authToken = (user as User).authToken; // Inclui o token JWT no token JWT
       }
       return token;
     },
@@ -97,9 +105,10 @@ const authOptions: AuthOptions = {
         image: token.picture,
         email: token.email,
         name: token.name,
+        authToken: token.authToken as string, // Inclui o token JWT na sessão
       };
       return session;
-    },
+    }
   },
   pages: {
     signIn: "/login",
