@@ -13,7 +13,7 @@ interface IUser extends Document {
   announcementCount: number;
   isTrial: boolean;
   authToken: string;
-  plan: mongoose.Schema.Types.ObjectId;
+  plan: number | null; // Certifique-se de que o campo `plan` está presente
   comparePassword: (password: string) => Promise<boolean>;
 }
 
@@ -42,7 +42,7 @@ const userSchema = new Schema<IUser>(
     image: { type: String, default: "/Generic_avatar.png" },
     announcementCount: { type: Number, default: 0 },
     isTrial: { type: Boolean, default: false },
-    plan: { type: mongoose.Schema.Types.ObjectId, ref: 'Plan', default: null },
+    plan: { type: Number, default: null }, // Certifique-se de que o campo `plan` está presente e com valor padrão
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
   },
@@ -88,7 +88,6 @@ userSchema.pre('save', async function (next) {
   }
   next();
 });
-
 
 // Verifica se o modelo já está registrado para evitar sobrescrever
 const User = (mongoose.models.User as IUserModel) || mongoose.model<IUser, IUserModel>("User", userSchema);

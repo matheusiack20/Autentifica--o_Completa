@@ -15,6 +15,7 @@ interface User extends NextAuthUser {
   role: string;
   image?: string;
   authToken?: string; // Add authToken property
+  plan?: number | null; // Add plan property
 }
 
 declare module "next-auth" {
@@ -25,6 +26,7 @@ declare module "next-auth" {
       image?: string | null;
       role?: string;
       authToken?: string; // Add authToken property
+      plan?: number | null; // Add plan property
     };
   }
 }
@@ -71,6 +73,7 @@ const authOptions: AuthOptions = {
             role: user.role,
             image: user.image || genericAvatar,
             authToken, // Adiciona o token JWT ao JSON de resposta
+            plan: user.plan, // Adiciona o plano ao JSON de resposta
           };
         } catch (error) {
           console.error("Erro durante a autorização:", error.message);
@@ -95,6 +98,7 @@ const authOptions: AuthOptions = {
         token.email = user.email;
         token.name = user.name;
         token.authToken = (user as User).authToken; // Inclui o token JWT no token JWT
+        token.plan = (user as User).plan; // Inclui o plano no token JWT
       }
       return token;
     },
@@ -106,6 +110,7 @@ const authOptions: AuthOptions = {
         email: token.email,
         name: token.name,
         authToken: token.authToken as string, // Inclui o token JWT na sessão
+        plan: token.plan as number | null, // Inclui o plano na sessão
       };
       return session;
     }

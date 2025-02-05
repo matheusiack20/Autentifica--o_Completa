@@ -25,9 +25,9 @@ const LoginPage = () => {
   useEffect(() => {
     setIsClient(true);
     if (status === 'authenticated') {
-      router.push('/'); // Redireciona se o usuário já está autenticado
+
     }
-  }, [status, router]);
+  }, [status, router, session]);
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -77,6 +77,12 @@ const LoginPage = () => {
         if (session?.user?.authToken) {
           console.log('Token JWT:', session.user.authToken); // Adicione este log
           Cookies.set('authToken', session.user.authToken, { expires: 1 }); // Armazena o token em um cookie
+        }
+        console.log('Plano do usuário:', session?.user?.plan); // Adicione este log
+        if (session?.user?.plan) {
+          router.push('/user-account'); // Redireciona após login bem-sucedido e se o usuário tiver um plano
+        } else {
+          router.push('/sobre'); // Redireciona para a página de assinatura se o usuário não tiver um plano
         }
         //router.push('/user-account'); // Redireciona após login bem-sucedido
       }
